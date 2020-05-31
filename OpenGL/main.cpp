@@ -60,22 +60,22 @@ static unsigned int CompileShader(unsigned int type, const std::string& source)
     return id;
 }
 
-static unsigned int CreateShader(const std::string& vertexShader, const std::string& fragmentShader)
-{
-    unsigned int program = glCreateProgram();
-    unsigned int vs = CompileShader(GL_VERTEX_SHADER, vertexShader);
-    unsigned int fs = CompileShader(GL_FRAGMENT_SHADER, fragmentShader);
-
-    glAttachShader(program, vs);
-    glAttachShader(program, fs);
-    glLinkProgram(program);
-    glValidateProgram(program);
-
-    glDeleteShader(vs);
-    glDeleteShader(fs);
-
-    return program;
-}
+//static unsigned int CreateShader(const std::string& vertexShader, const std::string& fragmentShader)
+//{
+//    unsigned int program = glCreateProgram();
+//    unsigned int vs = CompileShader(GL_VERTEX_SHADER, vertexShader);
+//    unsigned int fs = CompileShader(GL_FRAGMENT_SHADER, fragmentShader);
+//
+//    glAttachShader(program, vs);
+//    glAttachShader(program, fs);
+//    glLinkProgram(program);
+//    glValidateProgram(program);
+//
+//    glDeleteShader(vs);
+//    glDeleteShader(fs);
+//
+//    return program;
+//}
 
 //Create and compile our GLSL program from the shaders
 
@@ -133,8 +133,6 @@ int main(void)
     //Prints the GLEW and openGL versions
     std::cout << "Using GLEW version :" << glewGetString(GLEW_VERSION) << std::endl;
     std::cout << "Using openGL version: " << glGetString(GL_VERSION) << std::endl;
-
-    /*       Opengl-tutorial.org tutorial       */
 
     /*
       An array of 3 vectors which represents 3 vertices; 6 to make a rectangle; Each segment represents a face of a cube, made of two triangles; 
@@ -229,9 +227,6 @@ int main(void)
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         //Added code
-
-        /*       Opengl-tutorial.org tutorial       */
-
         glUseProgram(programID);
 
         //Pass the projection matrix to shader ( in this case could change every frame )
@@ -248,7 +243,6 @@ int main(void)
         model = glm::rotate(model, glm::radians(0.0f), glm::vec3(1.0f, 0.3f, 0.5f));
         glUniformMatrix4fv(glGetUniformLocation(programID, "model"), 1, GL_FALSE, &model[0][0]);
 
-        //////////////////////////////PLACE HOLDER 1
         //First attribute buffer : vertices
         glEnableVertexAttribArray(0);
         glVertexAttribPointer
@@ -265,15 +259,6 @@ int main(void)
         //Draw the triangle
         glDrawArrays(GL_TRIANGLES, 0, 36); // Starting from vertex 0; 3 vertices = one triangle, 6 = one face, 36 = one cube;
 
-        /*       Opengl-tutorial.org tutorial END      */
-
-        //Experimenting with GL_LINES//////////////////
-        /*glDrawArrays(GL_LINES, 0, 2);
-        
-        glBegin(GL_LINES);
-        glVertex3f(vertex1, 0.5f, 0.0f);
-        glVertex3f(vertex2, 0.5f, 0.0f);
-        glEnd();*/
 
         glDisableVertexAttribArray(0);
 
