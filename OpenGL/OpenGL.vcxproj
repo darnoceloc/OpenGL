@@ -146,13 +146,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Input\Input.cpp" />
     <ClCompile Include="Math\Matrices.cpp" />
     <ClCompile Include="Shaders\Functions\loadShader.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Input\Input.h" />
     <ClInclude Include="Math\Matrices.h" />
+    <ClInclude Include="Renderer\Renderer.h" />
     <ClInclude Include="Shaders\Functions\loadShader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
