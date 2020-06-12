@@ -1,8 +1,13 @@
-/******************************************************************************************************************************
-* Last Update: 11 June 2020 (added the up input for space: makes the camera move up in world space.)
+/******************************************************************************************************************************************************
 *
+* Created By:
+* Course: COP3530
+* Project 3: Comparison Between Sorting Algorithms(title work in progress)
+* Professor: Kapoor
 *
-******************************************************************************************************************************/
+* Last Update: 11 June 2020 (added the up and down input for space and left shift respectively: makes the camera move up and down in world space.)
+*
+*******************************************************************************************************************************************************/
 
 #include <glew.h>
 #include <glfw3.h>
@@ -86,6 +91,7 @@ int main(void)
     std::cout << "Using openGL version: " << glGetString(GL_VERSION) << std::endl;
 
     /*
+      *******CUBE*******
       An array of 3 vectors which represents 3 vertices; 6 to make a rectangle; Each segment represents a face of a cube, made of two triangles; 
       Looking at the face, the first vertex of each triangle is top left, triangle formed counter-clockwise; First vertex on top is (-0.5, 0.5, -0.5);
       First vertex on bottom is (-0.5, -0.5, 0.5);
@@ -146,36 +152,7 @@ int main(void)
     //World space position of our cube.
     glm::vec3 cubePosition[] =
     {   
-        //4
         glm::vec3( 0.0f,  0.0f,  0.0f),
-        glm::vec3( 0.0f,  0.0f, -1.0f),
-        glm::vec3( 0.0f,  0.0f, -2.0f),
-        glm::vec3( 0.0f,  0.0f, -3.0f),
-        glm::vec3( 1.0f,  0.0f, -1.0f),
-        glm::vec3(-1.0f,  0.0f, -1.0f),
-        glm::vec3(-2.0f,  0.0f, -1.0f),
-        glm::vec3(-2.0f,  0.0f, -2.0f),
-        glm::vec3(-2.0f,  0.0f, -3.0f),
-        //2
-        glm::vec3( 4.0f,  0.0f,  0.0f),
-        glm::vec3( 3.0f,  0.0f,  0.0f),
-        glm::vec3( 2.0f,  0.0f,  0.0f),
-        glm::vec3( 3.0f,  0.0f, -1.0f),
-        glm::vec3( 4.0f,  0.0f, -2.0f),
-        glm::vec3( 4.0f,  0.0f, -3.0f),
-        glm::vec3( 3.0f,  0.0f, -3.0f),
-        glm::vec3( 2.0f,  0.0f, -3.0f),
-        //0
-        glm::vec3( 8.0f,  0.0f,  0.0f),
-        glm::vec3( 8.0f,  0.0f, -1.0f),
-        glm::vec3( 8.0f,  0.0f, -2.0f),
-        glm::vec3( 8.0f,  0.0f, -3.0f),
-        glm::vec3( 6.0f,  0.0f,  0.0f),
-        glm::vec3( 6.0f,  0.0f, -1.0f),
-        glm::vec3( 6.0f,  0.0f, -2.0f),
-        glm::vec3( 6.0f,  0.0f, -3.0f),
-        glm::vec3( 7.0f,  0.0f,  0.0f),
-        glm::vec3( 7.0f,  0.0f, -3.0f),
     };
 
     //Identify vertex buffer
@@ -230,12 +207,13 @@ int main(void)
         glm::mat4 view = camera.GetViewMatrix();
         glUniformMatrix4fv(glGetUniformLocation(programID, "view"), 1, GL_FALSE, &view[0][0]);
         
-        for (unsigned int i = 0; i < 27; i++)
+        for (unsigned int i = 0; i < 1000; i++)
         {
             //Calculate model matrix and initialize.
             glm::mat4 model = glm::mat4(1.0f);
-            model = glm::translate(model, cubePosition[i]);
+            model = glm::translate(model, cubePosition[0] + glm::vec3(glm::cos(i)* 0.2f, i * 0.1f, glm::sin(i) * 0.2f));
             model = glm::rotate(model, glm::radians(0.0f), glm::vec3(1.0f, 0.3f, 0.5f));
+            model = glm::scale(model, glm::vec3(0.1f));
             glUniformMatrix4fv(glGetUniformLocation(programID, "model"), 1, GL_FALSE, &model[0][0]);
 
             //Draw the triangle
