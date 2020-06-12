@@ -7,6 +7,8 @@
 *
 * Last Update: 11 June 2020 (added the up and down input for space and left shift respectively: makes the camera move up and down in world space.)
 *
+* Need to do: Increase performance(ideas: face culling(might be done), VBO's, reduce draw calls(VBO's might achieve this)), abstract the rendering,
+*             abstract shapes and their storage, might adjust input movement.
 *******************************************************************************************************************************************************/
 
 #include <glew.h>
@@ -82,7 +84,8 @@ int main(void)
     }
 
     glEnable(GL_DEPTH_TEST);
-    
+    glEnable(GL_CULL_FACE);
+
     //Compile and load shaders and store the program id
     GLuint programID = LoadShaders("Shaders/Vertex/CameraShader.vert", "Shaders/Fragment/SimpleFragmentShader.frag");
 
@@ -138,7 +141,7 @@ int main(void)
          0.5f,  0.5f,  0.5f,
          0.5f,  0.5f, -0.5f,
         -0.5f,  0.5f, -0.5f,
-         0.5f,  0.5f,  0.5f,
+        -0.5f,  0.5f,  0.5f,
          0.5f,  0.5f,  0.5f,
          //Bottom
         -0.5f, -0.5f,  0.5f,
@@ -211,7 +214,7 @@ int main(void)
         {
             //Calculate model matrix and initialize.
             glm::mat4 model = glm::mat4(1.0f);
-            model = glm::translate(model, cubePosition[0] + glm::vec3(glm::cos(i)* 0.2f, i * 0.1f, glm::sin(i) * 0.2f));
+            model = glm::translate(model, cubePosition[0] + glm::vec3(glm::cos(i)* 0.2f + (glm::cos(i)), i * 0.1f, glm::sin(i) * 0.2f + (glm::sin(i))));
             model = glm::rotate(model, glm::radians(0.0f), glm::vec3(1.0f, 0.3f, 0.5f));
             model = glm::scale(model, glm::vec3(0.1f));
             glUniformMatrix4fv(glGetUniformLocation(programID, "model"), 1, GL_FALSE, &model[0][0]);
