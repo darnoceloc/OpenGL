@@ -1,16 +1,19 @@
 #pragma once
 
-#include <glew.h>
+//#include <glew.h>
 #include <glm.hpp>
 #include <gtc/matrix_transform.hpp>
 #include <vector>
+#include <iostream>
 
 enum CameraMovement
 {
 	FORWARD,
 	RIGHT,
 	BACKWARD,
-	LEFT
+	LEFT,
+	UP,
+	DOWN
 };
 
 //Default camera values
@@ -84,6 +87,14 @@ public:
 		if (direction == RIGHT)
 		{
 			position += right * velocity;
+		}
+		if (direction == UP)
+		{
+			position += worldUp * velocity;
+		}
+		if (direction == DOWN)
+		{
+			position -= worldUp * velocity;
 		}
 	}
 	
