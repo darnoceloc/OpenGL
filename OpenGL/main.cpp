@@ -27,7 +27,7 @@ void FrameBufferSizeCallback(GLFWwindow* window, int width, int height);
 inline void Mouse(GLFWwindow* window, double xPos, double yPos);
 
 //Global screen settings.
-const unsigned int SCR_WIDTH = 800;
+const unsigned int SCR_WIDTH  = 800;
 const unsigned int SCR_HEIGHT = 600;
 
 //Global camera variables.
@@ -106,7 +106,7 @@ int main(void)
                   2
       5         6
     */
-    static const GLfloat g_vertex_buffer_data[] =
+    static const GLfloat cubeVertexBuffer[] =
     {
          //Front
         -0.5f,  0.5f,  0.5f,
@@ -165,10 +165,21 @@ int main(void)
 
     glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
     //Give the vertices to OpenGL
-    //glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
+    //glBufferData(GL_ARRAY_BUFFER, sizeof(cubeVertexBuffer), cubeVertexBuffer, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(cubeVertexBuffer), cubeVertexBuffer, GL_STATIC_DRAW);
 
     //Added code end
+    //First attribute buffer : vertices
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer
+        (
+            0,              //attribute 0. No reason 0, but must match layout in shader. 
+            3,              //size
+            GL_FLOAT,       //type
+            GL_FALSE,       //normalized?
+            0,              //stride
+            (void*)0        //array buffer offset
+        );
 
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
@@ -190,17 +201,6 @@ int main(void)
         //Added code
         glUseProgram(programID);
 
-        //First attribute buffer : vertices
-        glEnableVertexAttribArray(0);
-        glVertexAttribPointer
-            (
-                0,              //attribute 0. No reason 0, but must match layout in shader. 
-                3,              //size
-                GL_FLOAT,       //type
-                GL_FALSE,       //normalized?
-                0,              //stride
-                (void*)0        //array buffer offset
-            );
 
         //Pass the projection matrix to shader ( in this case could change every frame )
         glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
@@ -210,7 +210,7 @@ int main(void)
         glm::mat4 view = camera.GetViewMatrix();
         glUniformMatrix4fv(glGetUniformLocation(programID, "view"), 1, GL_FALSE, &view[0][0]);
         
-        for (unsigned int i = 0; i < 1000; i++)
+        for (unsigned int i = 0; i < 10000; i++)
         {
             //Calculate model matrix and initialize.
             glm::mat4 model = glm::mat4(1.0f);
@@ -223,7 +223,6 @@ int main(void)
             glDrawArrays(GL_TRIANGLES, 0, 36); // Starting from vertex 0; 3 vertices = one triangle, 6 = one face, 36 = one cube;
         }
 
-        glDisableVertexAttribArray(0);
 
         //Added code end
 
@@ -234,6 +233,7 @@ int main(void)
         glfwPollEvents();
     }
     
+    glDisableVertexAttribArray(0);
     glfwTerminate();
     return 0;
 }
