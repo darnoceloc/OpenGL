@@ -5,7 +5,7 @@
 * Project 3: Comparison Between Sorting Algorithms(title work in progress)
 * Professor: Kapoor
 *
-* Last Update: 11 June 2020 (added the up and down input for space and left shift respectively: makes the camera move up and down in world space.)
+* Last Update: 17 June 2020 (Trying to get instancing to work)
 *
 * Need to do: Increase performance(ideas: face culling(might be done), VBO's, reduce draw calls(VBO's might achieve this)), abstract the rendering,
 *             abstract shapes and their storage, might adjust input movement.
@@ -153,16 +153,16 @@ int main(void)
     };
 
     //World space position of our cube.
-    glm::vec3 cubePosition[] =
+    /*glm::vec3 cubePosition[] =
     {   
         glm::vec3( 0.0f,  0.0f,  0.0f),
-    };
+    };*/
 
     //INSTANCING TEST
-    //Need to do: make sure the coordinates right.
-    unsigned int cubeGridXCoord = 10;
-    unsigned int cubeGridYCoord = 10;
-    unsigned int cubeGridZCoord = 10;
+    //The coords are for placing the cubes, there will be x * y * z cubes.
+    unsigned int cubeGridXCoord = 20;
+    unsigned int cubeGridYCoord = 20;
+    unsigned int cubeGridZCoord = 20;
     float displacement = 4.0f;
     unsigned int currentIndex = 0;
     glm::mat4* modelMatrices;
@@ -183,49 +183,58 @@ int main(void)
     }
 
     //INSTANCING TEST END
+
     unsigned int VAO;
     glGenVertexArrays(1, &VAO);
+    glBindVertexArray(VAO);
 
     //Identify vertex buffer
     GLuint vertexbuffer;
     //Generate 1 buffer, put the resulting identifier in vertexbuffer
     glGenBuffers(1, &vertexbuffer);
 
-    glBindVertexArray(VAO);
     glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
     //Give the vertices to OpenGL
     //glBufferData(GL_ARRAY_BUFFER, sizeof(cubeVertexBuffer), cubeVertexBuffer, GL_STATIC_DRAW);
-    glBufferData(GL_ARRAY_BUFFER, cubeGridXCoord * cubeGridYCoord * cubeGridZCoord * sizeof(glm::mat4), &modelMatrices[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(cubeVertexBuffer), cubeVertexBuffer, GL_STATIC_DRAW);
 
     //Added code end
     //First attribute buffer : vertices
     glEnableVertexAttribArray(0);
     glVertexAttribPointer
-        (
-            0,              //attribute 0. No reason 0, but must match layout in shader. 
-            3,              //size
-            GL_FLOAT,       //type
-            GL_FALSE,       //normalized?
-            0,              //stride
-            (void*)0        //array buffer offset
+    (
+        0,              //attribute 0. No reason 0, but must match layout in shader. 
+        3,              //size
+        GL_FLOAT,       //type
+        GL_FALSE,       //normalized?
+        0,              //stride
+        (void*)0        //array buffer offset
         );
 
+    glBindVertexArray(0);
+
+    unsigned int matricesBuffer;
+    glGenBuffers(1, &matricesBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, matricesBuffer);
+    glBufferData(GL_ARRAY_BUFFER, cubeGridXCoord * cubeGridYCoord * cubeGridZCoord * sizeof(glm::mat4), &modelMatrices[0], GL_STATIC_DRAW);
+
+    glBindVertexArray(VAO);
 
     // vertex attributes
-    std::size_t vec4Size = sizeof(glm::vec4);
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 4 * vec4Size, (void*)0);
-    glEnableVertexAttribArray(2);
-    glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, 4 * vec4Size, (void*)(1 * vec4Size));
-    glEnableVertexAttribArray(3);
-    glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, 4 * vec4Size, (void*)(2 * vec4Size));
-    glEnableVertexAttribArray(4);
-    glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, 4 * vec4Size, (void*)(3 * vec4Size));
 
-    glVertexAttribDivisor(1, 1);
+    glEnableVertexAttribArray(2);
+    glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void*)0);
+    glEnableVertexAttribArray(3);
+    glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void*)(1 * sizeof(glm::vec4)));
+    glEnableVertexAttribArray(4);
+    glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void*)(2 * sizeof(glm::vec4)));
+    glEnableVertexAttribArray(5);
+    glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void*)(3 * sizeof(glm::vec4)));
+
     glVertexAttribDivisor(2, 1);
     glVertexAttribDivisor(3, 1);
     glVertexAttribDivisor(4, 1);
+    glVertexAttribDivisor(5, 1);
 
     glBindVertexArray(0);
 
@@ -282,7 +291,8 @@ int main(void)
         //}
 
         glBindVertexArray(VAO);
-        glDrawElementsInstanced(GL_TRIANGLES, 36, GL_FLOAT, 0, cubeGridXCoord * cubeGridYCoord * cubeGridZCoord);
+        //glDrawElementsInstanced(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0, cubeGridXCoord * cubeGridYCoord * cubeGridZCoord);
+        glDrawArraysInstanced(GL_TRIANGLES, 0, 36, cubeGridXCoord * cubeGridYCoord * cubeGridZCoord);
         glBindVertexArray(0);
 
         //Added code end
