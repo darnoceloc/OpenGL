@@ -35,7 +35,7 @@ Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 
 //Global timing variables.
 float deltaTime = 0.0f;         //Time difference of current frame and last frame.
-float lastFrame = 0.0f;         //Keeps track of the time of the last frame. Used to calculate deltaTime.
+float lastTime = 0.0f;         //Keeps track of the time of the last frame. Used to calculate deltaTime.
 
 int main(void)
 {
@@ -158,15 +158,44 @@ int main(void)
         glm::vec3( 0.0f,  0.0f,  0.0f),
     };
 
+    //INSTANCING TEST
+    //Need to do: make sure the coordinates right.
+    unsigned int cubeGridXCoord = 10;
+    unsigned int cubeGridYCoord = 10;
+    unsigned int cubeGridZCoord = 10;
+    float displacement = 4.0f;
+    unsigned int currentIndex = 0;
+    glm::mat4* modelMatrices;
+
+    modelMatrices = new glm::mat4[cubeGridXCoord * cubeGridYCoord * cubeGridZCoord];
+    for (unsigned int i = 0; i < cubeGridXCoord; i++)
+    {
+        for (unsigned int j = 0; j < cubeGridYCoord; j++)
+        {
+            for (unsigned int k = 0; k < cubeGridZCoord; k++)
+            {
+                glm::mat4 model = glm::mat4(1.0f);
+                model = glm::translate(model, glm::vec3((float)i / displacement, (float)j / displacement, (float)k / displacement));
+                model = glm::scale(model, glm::vec3(0.1f));
+                modelMatrices[currentIndex++] = model;
+            }
+        }
+    }
+
+    //INSTANCING TEST END
+    unsigned int VAO;
+    glGenVertexArrays(1, &VAO);
+
     //Identify vertex buffer
     GLuint vertexbuffer;
     //Generate 1 buffer, put the resulting identifier in vertexbuffer
     glGenBuffers(1, &vertexbuffer);
 
+    glBindVertexArray(VAO);
     glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
     //Give the vertices to OpenGL
     //glBufferData(GL_ARRAY_BUFFER, sizeof(cubeVertexBuffer), cubeVertexBuffer, GL_STATIC_DRAW);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(cubeVertexBuffer), cubeVertexBuffer, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, cubeGridXCoord * cubeGridYCoord * cubeGridZCoord * sizeof(glm::mat4), &modelMatrices[0], GL_STATIC_DRAW);
 
     //Added code end
     //First attribute buffer : vertices
@@ -181,13 +210,42 @@ int main(void)
             (void*)0        //array buffer offset
         );
 
+
+    // vertex attributes
+    std::size_t vec4Size = sizeof(glm::vec4);
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 4 * vec4Size, (void*)0);
+    glEnableVertexAttribArray(2);
+    glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, 4 * vec4Size, (void*)(1 * vec4Size));
+    glEnableVertexAttribArray(3);
+    glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, 4 * vec4Size, (void*)(2 * vec4Size));
+    glEnableVertexAttribArray(4);
+    glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, 4 * vec4Size, (void*)(3 * vec4Size));
+
+    glVertexAttribDivisor(1, 1);
+    glVertexAttribDivisor(2, 1);
+    glVertexAttribDivisor(3, 1);
+    glVertexAttribDivisor(4, 1);
+
+    glBindVertexArray(0);
+
+    double previousFPSTime = glfwGetTime();
+    int frameCount = 0;
+
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
     {
-        //Get the time variables
-        float currentFrame = glfwGetTime();
-        deltaTime = currentFrame - lastFrame;
-        lastFrame = currentFrame;
+        //Get the time variables and display fps
+        float currentTime = glfwGetTime();
+        deltaTime = currentTime - lastTime;
+        lastTime= currentTime;
+        frameCount++;
+        if (currentTime - previousFPSTime >= 1.0f)
+        {
+            std::cout << "FPS: " << frameCount << "\r";
+            frameCount = 0;
+            previousFPSTime = currentTime;
+        }
 
         //Input
         ProcessInput(window, camera, deltaTime);
@@ -210,19 +268,22 @@ int main(void)
         glm::mat4 view = camera.GetViewMatrix();
         glUniformMatrix4fv(glGetUniformLocation(programID, "view"), 1, GL_FALSE, &view[0][0]);
         
-        for (unsigned int i = 0; i < 10000; i++)
-        {
-            //Calculate model matrix and initialize.
-            glm::mat4 model = glm::mat4(1.0f);
-            model = glm::translate(model, cubePosition[0] + glm::vec3(glm::cos(i)* 0.2f + (glm::cos(i)), i * 0.1f, glm::sin(i) * 0.2f + (glm::sin(i))));
-            model = glm::rotate(model, glm::radians(0.0f), glm::vec3(1.0f, 0.3f, 0.5f));
-            model = glm::scale(model, glm::vec3(0.1f));
-            glUniformMatrix4fv(glGetUniformLocation(programID, "model"), 1, GL_FALSE, &model[0][0]);
+        //for (unsigned int i = 0; i < 1000; i++)
+        //{
+        //    //Calculate model matrix and initialize.
+        //    glm::mat4 model = glm::mat4(1.0f);
+        //    model = glm::translate(model, cubePosition[0] + glm::vec3(glm::cos(i)* 0.2f + (glm::cos(i)), i * 0.1f, glm::sin(i) * 0.2f + (glm::sin(i))));
+        //    //model = glm::rotate(model, glm::radians(0.0f), glm::vec3(1.0f, 0.3f, 0.5f));
+        //    model = glm::scale(model, glm::vec3(0.1f));
+        //    glUniformMatrix4fv(glGetUniformLocation(programID, "model"), 1, GL_FALSE, &model[0][0]);
 
-            //Draw the triangle
-            glDrawArrays(GL_TRIANGLES, 0, 36); // Starting from vertex 0; 3 vertices = one triangle, 6 = one face, 36 = one cube;
-        }
+        //    //Draw the triangle
+        //    glDrawArrays(GL_TRIANGLES, 0, 36); // Starting from vertex 0; 3 vertices = one triangle, 6 = one face, 36 = one cube;
+        //}
 
+        glBindVertexArray(VAO);
+        glDrawElementsInstanced(GL_TRIANGLES, 36, GL_FLOAT, 0, cubeGridXCoord * cubeGridYCoord * cubeGridZCoord);
+        glBindVertexArray(0);
 
         //Added code end
 
