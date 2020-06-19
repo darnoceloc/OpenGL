@@ -5,10 +5,9 @@
 * Project 3: Comparison Between Sorting Algorithms(title work in progress)
 * Professor: Kapoor
 *
-* Last Update: 17 June 2020 (Trying to get instancing to work)
+* Last Update: 19 June 2020 (Got shape data in a class)
 *
-* Need to do: Increase performance(ideas: face culling(might be done), VBO's, reduce draw calls(VBO's might achieve this)), abstract the rendering,
-*             abstract shapes and their storage, might adjust input movement.
+* Need to do: abstract the rendering, might adjust input movement.
 *******************************************************************************************************************************************************/
 
 #include <glew.h>
@@ -21,6 +20,8 @@
 #include "Shaders/Functions/loadShader.h"
 #include "Camera.h"
 #include "Input/Input.h"
+#include "Geometry/ShapeVertices.h"
+#include "Geometry/CodedMesh.h"
 
 //Function used to resize the window appropriately.
 void FrameBufferSizeCallback(GLFWwindow* window, int width, int height);
@@ -93,81 +94,15 @@ int main(void)
     std::cout << "Using GLEW version :" << glewGetString(GLEW_VERSION) << std::endl;
     std::cout << "Using openGL version: " << glGetString(GL_VERSION) << std::endl;
 
-    /*
-      *******CUBE*******
-      An array of 3 vectors which represents 3 vertices; 6 to make a rectangle; Each segment represents a face of a cube, made of two triangles; 
-      Looking at the face, the first vertex of each triangle is top left, triangle formed counter-clockwise; First vertex on top is (-0.5, 0.5, -0.5);
-      First vertex on bottom is (-0.5, -0.5, 0.5);
-    
-        1         3
-      4    
-             
-               
-                  2
-      5         6
-    */
-    static const GLfloat cubeVertexBuffer[] =
-    {
-         //Front
-        -0.5f,  0.5f,  0.5f,
-         0.5f, -0.5f,  0.5f,
-         0.5f,  0.5f,  0.5f,
-        -0.5f,  0.5f,  0.5f,
-        -0.5f, -0.5f,  0.5f,
-         0.5f, -0.5f,  0.5f,
-         //Right
-         0.5f,  0.5f,  0.5f,
-         0.5f, -0.5f, -0.5f,
-         0.5f,  0.5f, -0.5f,
-         0.5f,  0.5f,  0.5f,
-         0.5f, -0.5f,  0.5f,
-         0.5f, -0.5f, -0.5f,
-         //Back
-         0.5f,  0.5f, -0.5f,
-        -0.5f, -0.5f, -0.5f,
-        -0.5f,  0.5f, -0.5f,
-         0.5f,  0.5f, -0.5f,
-         0.5f, -0.5f, -0.5f,
-        -0.5f, -0.5f, -0.5f,
-         //Left
-        -0.5f,  0.5f, -0.5f,
-        -0.5f, -0.5f,  0.5f,
-        -0.5f,  0.5f,  0.5f,
-        -0.5f,  0.5f, -0.5f,
-        -0.5f, -0.5f, -0.5f,
-        -0.5f, -0.5f,  0.5f,
-         //Top
-        -0.5f,  0.5f, -0.5f,
-         0.5f,  0.5f,  0.5f,
-         0.5f,  0.5f, -0.5f,
-        -0.5f,  0.5f, -0.5f,
-        -0.5f,  0.5f,  0.5f,
-         0.5f,  0.5f,  0.5f,
-         //Bottom
-        -0.5f, -0.5f,  0.5f,
-         0.5f, -0.5f, -0.5f,
-         0.5f, -0.5f,  0.5f,
-        -0.5f, -0.5f,  0.5f,
-        -0.5f, -0.5f, -0.5f,
-         0.5f, -0.5f, -0.5f,
-    };
-
-    //World space position of our cube.
-    /*glm::vec3 cubePosition[] =
-    {   
-        glm::vec3( 0.0f,  0.0f,  0.0f),
-    };*/
-
     //INSTANCING TEST
     //The coords are for placing the cubes, there will be x * y * z cubes.
-    unsigned int cubeGridXCoord = 20;
-    unsigned int cubeGridYCoord = 20;
-    unsigned int cubeGridZCoord = 20;
-    float displacement = 4.0f;
+    unsigned int cubeGridXCoord = 10;
+    unsigned int cubeGridYCoord = 10;
+    unsigned int cubeGridZCoord = 10;
+    float displacement = 50.0f;
     unsigned int currentIndex = 0;
-    glm::mat4* modelMatrices;
+    glm::mat4* modelMatrices = new glm::mat4[cubeGridXCoord * cubeGridYCoord * cubeGridZCoord];
 
-    modelMatrices = new glm::mat4[cubeGridXCoord * cubeGridYCoord * cubeGridZCoord];
     for (unsigned int i = 0; i < cubeGridXCoord; i++)
     {
         for (unsigned int j = 0; j < cubeGridYCoord; j++)
@@ -176,52 +111,22 @@ int main(void)
             {
                 glm::mat4 model = glm::mat4(1.0f);
                 model = glm::translate(model, glm::vec3((float)i / displacement, (float)j / displacement, (float)k / displacement));
-                model = glm::scale(model, glm::vec3(0.1f));
+                model = glm::scale(model, glm::vec3(0.01f));
                 modelMatrices[currentIndex++] = model;
             }
         }
     }
 
-    //INSTANCING TEST END
-
-    unsigned int VAO;
-    glGenVertexArrays(1, &VAO);
-    glBindVertexArray(VAO);
-
-    //Identify vertex buffer
-    GLuint vertexbuffer;
-    //Generate 1 buffer, put the resulting identifier in vertexbuffer
-    glGenBuffers(1, &vertexbuffer);
-
-    glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-    //Give the vertices to OpenGL
-    //glBufferData(GL_ARRAY_BUFFER, sizeof(cubeVertexBuffer), cubeVertexBuffer, GL_STATIC_DRAW);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(cubeVertexBuffer), cubeVertexBuffer, GL_STATIC_DRAW);
-
-    //Added code end
-    //First attribute buffer : vertices
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer
-    (
-        0,              //attribute 0. No reason 0, but must match layout in shader. 
-        3,              //size
-        GL_FLOAT,       //type
-        GL_FALSE,       //normalized?
-        0,              //stride
-        (void*)0        //array buffer offset
-        );
-
-    glBindVertexArray(0);
+    //Mesh to hold the vertex, VAO, and VBO data.
+    CodedMesh cube(ShapeVertices::Cube);
+    glBindVertexArray(cube.GetVAO());
 
     unsigned int matricesBuffer;
     glGenBuffers(1, &matricesBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, matricesBuffer);
     glBufferData(GL_ARRAY_BUFFER, cubeGridXCoord * cubeGridYCoord * cubeGridZCoord * sizeof(glm::mat4), &modelMatrices[0], GL_STATIC_DRAW);
 
-    glBindVertexArray(VAO);
-
     // vertex attributes
-
     glEnableVertexAttribArray(2);
     glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void*)0);
     glEnableVertexAttribArray(3);
@@ -276,21 +181,8 @@ int main(void)
         //Camera/view transformation.
         glm::mat4 view = camera.GetViewMatrix();
         glUniformMatrix4fv(glGetUniformLocation(programID, "view"), 1, GL_FALSE, &view[0][0]);
-        
-        //for (unsigned int i = 0; i < 1000; i++)
-        //{
-        //    //Calculate model matrix and initialize.
-        //    glm::mat4 model = glm::mat4(1.0f);
-        //    model = glm::translate(model, cubePosition[0] + glm::vec3(glm::cos(i)* 0.2f + (glm::cos(i)), i * 0.1f, glm::sin(i) * 0.2f + (glm::sin(i))));
-        //    //model = glm::rotate(model, glm::radians(0.0f), glm::vec3(1.0f, 0.3f, 0.5f));
-        //    model = glm::scale(model, glm::vec3(0.1f));
-        //    glUniformMatrix4fv(glGetUniformLocation(programID, "model"), 1, GL_FALSE, &model[0][0]);
 
-        //    //Draw the triangle
-        //    glDrawArrays(GL_TRIANGLES, 0, 36); // Starting from vertex 0; 3 vertices = one triangle, 6 = one face, 36 = one cube;
-        //}
-
-        glBindVertexArray(VAO);
+        glBindVertexArray(cube.GetVAO());
         //glDrawElementsInstanced(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0, cubeGridXCoord * cubeGridYCoord * cubeGridZCoord);
         glDrawArraysInstanced(GL_TRIANGLES, 0, 36, cubeGridXCoord * cubeGridYCoord * cubeGridZCoord);
         glBindVertexArray(0);
