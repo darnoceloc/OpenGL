@@ -5,10 +5,9 @@
 * Project 3: Comparison Between Sorting Algorithms(title work in progress)
 * Professor: Kapoor
 *
-* Last Update: 11 June 2020 (added the up and down input for space and left shift respectively: makes the camera move up and down in world space.)
+* Last Update: 19 June 2020 (Got shape data in a class)
 *
-* Need to do: Increase performance(ideas: face culling(might be done), VBO's, reduce draw calls(VBO's might achieve this)), abstract the rendering,
-*             abstract shapes and their storage, might adjust input movement.
+* Need to do: abstract the rendering, might adjust input movement.
 *******************************************************************************************************************************************************/
 
 #include <glew.h>
@@ -17,10 +16,14 @@
 #include <glm.hpp>
 #include <gtc/matrix_transform.hpp>
 #include <gtc/type_ptr.hpp>
+#include <algorithm>
 
 #include "Shaders/Functions/loadShader.h"
 #include "Camera.h"
 #include "Input/Input.h"
+#include "Geometry/ShapeVertices.h"
+#include "Geometry/CodedMesh.h"
+#include "Renderer/Renderer.h"
 
 //Function used to resize the window appropriately.
 void FrameBufferSizeCallback(GLFWwindow* window, int width, int height);
@@ -35,7 +38,7 @@ Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 
 //Global timing variables.
 float deltaTime = 0.0f;         //Time difference of current frame and last frame.
-float lastFrame = 0.0f;         //Keeps track of the time of the last frame. Used to calculate deltaTime.
+float lastTime = 0.0f;         //Keeps track of the time of the last frame. Used to calculate deltaTime.
 
 int main(void)
 {
@@ -93,101 +96,112 @@ int main(void)
     std::cout << "Using GLEW version :" << glewGetString(GLEW_VERSION) << std::endl;
     std::cout << "Using openGL version: " << glGetString(GL_VERSION) << std::endl;
 
-    /*
-      *******CUBE*******
-      An array of 3 vectors which represents 3 vertices; 6 to make a rectangle; Each segment represents a face of a cube, made of two triangles; 
-      Looking at the face, the first vertex of each triangle is top left, triangle formed counter-clockwise; First vertex on top is (-0.5, 0.5, -0.5);
-      First vertex on bottom is (-0.5, -0.5, 0.5);
-    
-        1         3
-      4    
-             
-               
-                  2
-      5         6
-    */
-    static const GLfloat cubeVertexBuffer[] =
+    //INSTANCING TEST
+    Renderer renderer;
+    //The coords are for placing the cubes, there will be x * y * z cubes.
+    int cubeGridXCoord = 20;
+    int cubeGridYCoord = 20;
+    int cubeGridZCoord = 20;
+    glm::mat4* modelMatrices = new glm::mat4[cubeGridXCoord * cubeGridYCoord * cubeGridZCoord];
+    renderer.SetModelMatrix(modelMatrices, cubeGridXCoord, cubeGridYCoord, cubeGridZCoord, 0.02f, 0.01f, 0, 0, 0);
+
+    glm::vec3* colors = new glm::vec3[cubeGridXCoord * cubeGridYCoord * cubeGridZCoord];
+    int currentIndex = 0;
+    for (unsigned int i = 0; i < cubeGridXCoord; i++)
     {
-         //Front
-        -0.5f,  0.5f,  0.5f,
-         0.5f, -0.5f,  0.5f,
-         0.5f,  0.5f,  0.5f,
-        -0.5f,  0.5f,  0.5f,
-        -0.5f, -0.5f,  0.5f,
-         0.5f, -0.5f,  0.5f,
-         //Right
-         0.5f,  0.5f,  0.5f,
-         0.5f, -0.5f, -0.5f,
-         0.5f,  0.5f, -0.5f,
-         0.5f,  0.5f,  0.5f,
-         0.5f, -0.5f,  0.5f,
-         0.5f, -0.5f, -0.5f,
-         //Back
-         0.5f,  0.5f, -0.5f,
-        -0.5f, -0.5f, -0.5f,
-        -0.5f,  0.5f, -0.5f,
-         0.5f,  0.5f, -0.5f,
-         0.5f, -0.5f, -0.5f,
-        -0.5f, -0.5f, -0.5f,
-         //Left
-        -0.5f,  0.5f, -0.5f,
-        -0.5f, -0.5f,  0.5f,
-        -0.5f,  0.5f,  0.5f,
-        -0.5f,  0.5f, -0.5f,
-        -0.5f, -0.5f, -0.5f,
-        -0.5f, -0.5f,  0.5f,
-         //Top
-        -0.5f,  0.5f, -0.5f,
-         0.5f,  0.5f,  0.5f,
-         0.5f,  0.5f, -0.5f,
-        -0.5f,  0.5f, -0.5f,
-        -0.5f,  0.5f,  0.5f,
-         0.5f,  0.5f,  0.5f,
-         //Bottom
-        -0.5f, -0.5f,  0.5f,
-         0.5f, -0.5f, -0.5f,
-         0.5f, -0.5f,  0.5f,
-        -0.5f, -0.5f,  0.5f,
-        -0.5f, -0.5f, -0.5f,
-         0.5f, -0.5f, -0.5f,
-    };
+        for (unsigned int j = 0; j < cubeGridYCoord; j++)
+        {
+            for (unsigned int k = 0; k < cubeGridZCoord; k++)
+            {
+                colors[currentIndex++] = glm::vec3((((float)255 / (cubeGridXCoord - 1)) * i) / 255.0f, (((float)255 / (cubeGridXCoord - 1)) * j) / 255.0f, (((float)255 / (cubeGridXCoord - 1)) * k) / 255.0f);
+            }
+        }
+    }
+    
 
-    //World space position of our cube.
-    glm::vec3 cubePosition[] =
-    {   
-        glm::vec3( 0.0f,  0.0f,  0.0f),
-    };
+    //Mesh to hold the vertex, VAO, and VBO data.
+    CodedMesh cube(ShapeVertices::Cube);
+    glBindVertexArray(cube.GetVAO());
 
-    //Identify vertex buffer
-    GLuint vertexbuffer;
-    //Generate 1 buffer, put the resulting identifier in vertexbuffer
-    glGenBuffers(1, &vertexbuffer);
+    unsigned int colorBuffer;
+    glGenBuffers(1, &colorBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
+    glBufferData(GL_ARRAY_BUFFER, cubeGridXCoord * cubeGridYCoord * cubeGridZCoord * sizeof(glm::vec3), &colors[0], GL_STATIC_DRAW);
 
-    glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-    //Give the vertices to OpenGL
-    //glBufferData(GL_ARRAY_BUFFER, sizeof(cubeVertexBuffer), cubeVertexBuffer, GL_STATIC_DRAW);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(cubeVertexBuffer), cubeVertexBuffer, GL_STATIC_DRAW);
+    std::random_shuffle(&colors[0], &colors[cubeGridXCoord * cubeGridYCoord * cubeGridZCoord]);
 
-    //Added code end
-    //First attribute buffer : vertices
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer
-        (
-            0,              //attribute 0. No reason 0, but must match layout in shader. 
-            3,              //size
-            GL_FLOAT,       //type
-            GL_FALSE,       //normalized?
-            0,              //stride
-            (void*)0        //array buffer offset
-        );
+    /*currentIndex = 0;
+    int indexToCheck = 0;
+    for (unsigned int i = 0; i < cubeGridXCoord; i++)
+    {
+        for (unsigned int j = 0; j < cubeGridYCoord; j++)
+        {
+            for (unsigned int k = 0; k < cubeGridZCoord; k++)
+            {
+                while (indexToCheck < 27000)
+                {
+                    if (colors[indexToCheck] == glm::vec3((((float)255 / (cubeGridXCoord - 1)) * i) / 255.0f, (((float)255 / (cubeGridXCoord - 1)) * j) / 255.0f, (((float)255 / (cubeGridXCoord - 1)) * k) / 255.0f))
+                    {
+                        glm::vec3 temp = colors[currentIndex];
+                        colors[currentIndex++] = colors[indexToCheck];
+                        colors[indexToCheck] = temp;
+                    }
+                    indexToCheck++;
+                }
+                indexToCheck = 0;
+            }
+        }
+    }*/
+
+
+
+    glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
+    glBufferData(GL_ARRAY_BUFFER, cubeGridXCoord * cubeGridYCoord * cubeGridZCoord * sizeof(colors[0]), &colors[0], GL_STATIC_DRAW);
+
+
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (void*)0);
+    glVertexAttribDivisor(1, 1);
+
+    unsigned int matricesBuffer;
+    glGenBuffers(1, &matricesBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, matricesBuffer);
+    glBufferData(GL_ARRAY_BUFFER, cubeGridXCoord * cubeGridYCoord * cubeGridZCoord * sizeof(glm::mat4), &modelMatrices[0], GL_STATIC_DRAW);
+
+    // vertex attributes
+    glEnableVertexAttribArray(2);
+    glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void*)0);
+    glEnableVertexAttribArray(3);
+    glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void*)(1 * sizeof(glm::vec4)));
+    glEnableVertexAttribArray(4);
+    glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void*)(2 * sizeof(glm::vec4)));
+    glEnableVertexAttribArray(5);
+    glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void*)(3 * sizeof(glm::vec4)));
+
+    glVertexAttribDivisor(2, 1);
+    glVertexAttribDivisor(3, 1);
+    glVertexAttribDivisor(4, 1);
+    glVertexAttribDivisor(5, 1);
+
+    glBindVertexArray(0);
+
+    double previousFPSTime = glfwGetTime();
+    int frameCount = 0;
 
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
     {
-        //Get the time variables
-        float currentFrame = glfwGetTime();
-        deltaTime = currentFrame - lastFrame;
-        lastFrame = currentFrame;
+        //Get the time variables and display fps
+        float currentTime = glfwGetTime();
+        deltaTime = currentTime - lastTime;
+        lastTime= currentTime;
+        frameCount++;
+        if (currentTime - previousFPSTime >= 1.0f)
+        {
+            std::cout << "FPS: " << frameCount << "\r";
+            frameCount = 0;
+            previousFPSTime = currentTime;
+        }
 
         //Input
         ProcessInput(window, camera, deltaTime);
@@ -209,20 +223,11 @@ int main(void)
         //Camera/view transformation.
         glm::mat4 view = camera.GetViewMatrix();
         glUniformMatrix4fv(glGetUniformLocation(programID, "view"), 1, GL_FALSE, &view[0][0]);
-        
-        for (unsigned int i = 0; i < 10000; i++)
-        {
-            //Calculate model matrix and initialize.
-            glm::mat4 model = glm::mat4(1.0f);
-            model = glm::translate(model, cubePosition[0] + glm::vec3(glm::cos(i)* 0.2f + (glm::cos(i)), i * 0.1f, glm::sin(i) * 0.2f + (glm::sin(i))));
-            model = glm::rotate(model, glm::radians(0.0f), glm::vec3(1.0f, 0.3f, 0.5f));
-            model = glm::scale(model, glm::vec3(0.1f));
-            glUniformMatrix4fv(glGetUniformLocation(programID, "model"), 1, GL_FALSE, &model[0][0]);
 
-            //Draw the triangle
-            glDrawArrays(GL_TRIANGLES, 0, 36); // Starting from vertex 0; 3 vertices = one triangle, 6 = one face, 36 = one cube;
-        }
-
+        glBindVertexArray(cube.GetVAO());
+        //glDrawElementsInstanced(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0, cubeGridXCoord * cubeGridYCoord * cubeGridZCoord);
+        glDrawArraysInstanced(GL_TRIANGLES, 0, 36, cubeGridXCoord * cubeGridYCoord * cubeGridZCoord);
+        glBindVertexArray(0);
 
         //Added code end
 
