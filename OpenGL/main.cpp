@@ -24,6 +24,9 @@
 #include "Geometry/ShapeVertices.h"
 #include "Geometry/CodedMesh.h"
 #include "Renderer/Renderer.h"
+#include "Sorts/MergeSort.h"
+
+#include <vector>
 
 //Function used to resize the window appropriately.
 void FrameBufferSizeCallback(GLFWwindow* window, int width, int height);
@@ -42,6 +45,24 @@ float lastTime = 0.0f;         //Keeps track of the time of the last frame. Used
 
 int main(void)
 {
+    //*************MERGE TEST
+    /*int* testArray = new int[1000];
+    for (int i = 0; i < 1000; i++)
+    {
+        testArray[i] = i;
+    }
+    std::random_shuffle(&testArray[0], &testArray[1000]);
+    for (int i = 0; i < 1000; i++)
+    {
+        std::cout << i << ": " <<testArray[i] << std::endl;
+    }
+    MergeSort(testArray, 0, 999);
+    for (int i = 0; i < 1000; i++)
+    {
+        std::cout << i << ": " << testArray[i] << std::endl;
+    }*/
+    /*********************TEST END/
+
     /* Initialize the library */
     if (!glfwInit())
     {
@@ -113,7 +134,7 @@ int main(void)
         {
             for (unsigned int k = 0; k < cubeGridZCoord; k++)
             {
-                colors[currentIndex++] = glm::vec3((((float)255 / (cubeGridXCoord - 1)) * i) / 255.0f, (((float)255 / (cubeGridXCoord - 1)) * j) / 255.0f, (((float)255 / (cubeGridXCoord - 1)) * k) / 255.0f);
+                colors[currentIndex++] = glm::vec3((((float)255 / (cubeGridXCoord - 1)) * i) / 255.0f, (((float)255 / (cubeGridYCoord - 1)) * j) / 255.0f, (((float)255 / (cubeGridZCoord - 1)) * k) / 255.0f);
             }
         }
     }
@@ -130,32 +151,8 @@ int main(void)
 
     std::random_shuffle(&colors[0], &colors[cubeGridXCoord * cubeGridYCoord * cubeGridZCoord]);
 
-    /*currentIndex = 0;
-    int indexToCheck = 0;
-    for (unsigned int i = 0; i < cubeGridXCoord; i++)
-    {
-        for (unsigned int j = 0; j < cubeGridYCoord; j++)
-        {
-            for (unsigned int k = 0; k < cubeGridZCoord; k++)
-            {
-                while (indexToCheck < 27000)
-                {
-                    if (colors[indexToCheck] == glm::vec3((((float)255 / (cubeGridXCoord - 1)) * i) / 255.0f, (((float)255 / (cubeGridXCoord - 1)) * j) / 255.0f, (((float)255 / (cubeGridXCoord - 1)) * k) / 255.0f))
-                    {
-                        glm::vec3 temp = colors[currentIndex];
-                        colors[currentIndex++] = colors[indexToCheck];
-                        colors[indexToCheck] = temp;
-                    }
-                    indexToCheck++;
-                }
-                indexToCheck = 0;
-            }
-        }
-    }*/
 
-
-
-    glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
+    //MergeSort(colors, 0, cubeGridXCoord * cubeGridYCoord * cubeGridZCoord - 1);
     glBufferData(GL_ARRAY_BUFFER, cubeGridXCoord * cubeGridYCoord * cubeGridZCoord * sizeof(colors[0]), &colors[0], GL_STATIC_DRAW);
 
 
@@ -187,6 +184,7 @@ int main(void)
 
     double previousFPSTime = glfwGetTime();
     int frameCount = 0;
+    bool isSorted = false;
 
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
@@ -194,7 +192,7 @@ int main(void)
         //Get the time variables and display fps
         float currentTime = glfwGetTime();
         deltaTime = currentTime - lastTime;
-        lastTime= currentTime;
+        lastTime = currentTime;
         frameCount++;
         if (currentTime - previousFPSTime >= 1.0f)
         {
@@ -225,7 +223,12 @@ int main(void)
         glUniformMatrix4fv(glGetUniformLocation(programID, "view"), 1, GL_FALSE, &view[0][0]);
 
         glBindVertexArray(cube.GetVAO());
-        //glDrawElementsInstanced(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0, cubeGridXCoord * cubeGridYCoord * cubeGridZCoord);
+        if (!isSorted)
+        {
+            isSorted = true;
+            MergeSort(colors, 0, cubeGridXCoord * cubeGridYCoord * cubeGridZCoord - 1, cubeGridXCoord, cubeGridYCoord, cubeGridZCoord, colorBuffer, programID, 
+                      window, SCR_WIDTH, SCR_HEIGHT, camera, cube, deltaTime, lastTime, currentTime);
+        }
         glDrawArraysInstanced(GL_TRIANGLES, 0, 36, cubeGridXCoord * cubeGridYCoord * cubeGridZCoord);
         glBindVertexArray(0);
 
