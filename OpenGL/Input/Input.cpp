@@ -55,4 +55,8 @@ void ProcessInput(GLFWwindow* window, Camera &camera, float &deltaTime)
     {
         camera.ProcessKeyboard(UP, deltaTime);
     }
+    if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+    {
+        camera.ProcessKeyboard(DOWN, deltaTime);
+    }
 }

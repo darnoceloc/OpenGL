@@ -12,7 +12,8 @@ enum CameraMovement
 	RIGHT,
 	BACKWARD,
 	LEFT,
-	UP
+	UP,
+	DOWN
 };
 
 //Default camera values
@@ -90,6 +91,10 @@ public:
 		if (direction == UP)
 		{
 			position += worldUp * velocity;
+		}
+		if (direction == DOWN)
+		{
+			position -= worldUp * velocity;
 		}
 	}
 	

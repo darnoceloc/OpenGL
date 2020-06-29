@@ -146,17 +146,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Geometry\CodedMesh.cpp" />
+    <ClCompile Include="Geometry\ShapeVertices.cpp" />
     <ClCompile Include="Input\Input.cpp" />
-    <ClCompile Include="Math\Matrices.cpp" />
+    <ClCompile Include="Renderer\Renderer.cpp" />
     <ClCompile Include="Shaders\Functions\loadShader.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Geometry\ShapeVertices.h" />
     <ClInclude Include="Input\Input.h" />
-    <ClInclude Include="Math\Matrices.h" />
+    <ClInclude Include="Geometry\CodedMesh.h" />
     <ClInclude Include="Renderer\Renderer.h" />
     <ClInclude Include="Shaders\Functions\loadShader.h" />
+    <ClInclude Include="Sorts\MergeSort.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
