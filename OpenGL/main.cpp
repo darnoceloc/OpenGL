@@ -45,24 +45,6 @@ float lastTime = 0.0f;         //Keeps track of the time of the last frame. Used
 
 int main(void)
 {
-    //*************MERGE TEST
-    /*int* testArray = new int[1000];
-    for (int i = 0; i < 1000; i++)
-    {
-        testArray[i] = i;
-    }
-    std::random_shuffle(&testArray[0], &testArray[1000]);
-    for (int i = 0; i < 1000; i++)
-    {
-        std::cout << i << ": " <<testArray[i] << std::endl;
-    }
-    MergeSort(testArray, 0, 999);
-    for (int i = 0; i < 1000; i++)
-    {
-        std::cout << i << ": " << testArray[i] << std::endl;
-    }*/
-    /*********************TEST END/
-
     /* Initialize the library */
     if (!glfwInit())
     {
@@ -70,14 +52,8 @@ int main(void)
         return -1;
     }
 
-    /*       OpenGLtutorials.org tutorial       */
     //Triangle doesn't show if other 3 are uncommented
     glfwWindowHint(GLFW_SAMPLES, 4);                                    //4x antialiasing
-    //glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);                      //OpenGL 3.3
-    //glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    //glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);      //We don't want the old OpenGL
-    //glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-    /*       OpenGLtutorials.org tutorial end       */
 
     GLFWwindow* window;
 
@@ -120,9 +96,9 @@ int main(void)
     //INSTANCING TEST
     Renderer renderer;
     //The coords are for placing the cubes, there will be x * y * z cubes.
-    int cubeGridXCoord = 20;
-    int cubeGridYCoord = 20;
-    int cubeGridZCoord = 20;
+    int cubeGridXCoord = 50;
+    int cubeGridYCoord = 50;
+    int cubeGridZCoord = 50;
     glm::mat4* modelMatrices = new glm::mat4[cubeGridXCoord * cubeGridYCoord * cubeGridZCoord];
     renderer.SetModelMatrix(modelMatrices, cubeGridXCoord, cubeGridYCoord, cubeGridZCoord, 0.02f, 0.01f, 0, 0, 0);
 
@@ -222,14 +198,20 @@ int main(void)
         glm::mat4 view = camera.GetViewMatrix();
         glUniformMatrix4fv(glGetUniformLocation(programID, "view"), 1, GL_FALSE, &view[0][0]);
 
+        //Bind the appropriate VAO and then call merge sort to sort during runtime.
         glBindVertexArray(cube.GetVAO());
         if (!isSorted)
         {
             isSorted = true;
             MergeSort(colors, 0, cubeGridXCoord * cubeGridYCoord * cubeGridZCoord - 1, cubeGridXCoord, cubeGridYCoord, cubeGridZCoord, colorBuffer, programID, 
-                      window, SCR_WIDTH, SCR_HEIGHT, camera, cube, deltaTime, lastTime, currentTime);
+                      window, SCR_WIDTH, SCR_HEIGHT, camera, cube, deltaTime, lastTime, currentTime, frameCount, previousFPSTime);
+            glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
+            glBufferData(GL_ARRAY_BUFFER, cubeGridXCoord * cubeGridYCoord * cubeGridZCoord * sizeof(glm::vec3), &colors[0], GL_DYNAMIC_DRAW);
+            glDrawArraysInstanced(GL_TRIANGLES, 0, 36, cubeGridXCoord * cubeGridYCoord * cubeGridZCoord);
         }
+        
         glDrawArraysInstanced(GL_TRIANGLES, 0, 36, cubeGridXCoord * cubeGridYCoord * cubeGridZCoord);
+        
         glBindVertexArray(0);
 
         //Added code end

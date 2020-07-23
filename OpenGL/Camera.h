@@ -70,7 +70,8 @@ public:
 	//Processes the input from keyboard.
 	void ProcessKeyboard(CameraMovement direction, float deltaTime)
 	{ 
-		std::cout << position[0] << ", " << position[1] << ", " << position[2] << std::endl;
+		//Used to print postion.
+		//std::cout << position[0] << ", " << position[1] << ", " << position[2] << std::endl;
 		float velocity = movementSpeed * deltaTime;
 		if (direction == FORWARD)
 		{

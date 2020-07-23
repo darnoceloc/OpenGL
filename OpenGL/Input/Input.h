@@ -6,3 +6,5 @@
 void MouseCallback(GLFWwindow* window, double xPos, double yPos, Camera& camera);
 //Function to process the input of the keyboard.
 void ProcessInput(GLFWwindow* window, Camera& camera, float& deltaTime);
+//Overload that allows ability to pause and speed adjust.
+void ProcessInput(GLFWwindow* window, Camera& camera, float& deltaTime, bool& paused, float& animationSpeed);

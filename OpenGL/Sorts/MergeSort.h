@@ -3,6 +3,7 @@
 #include <glm.hpp>
 //#include <gtc/matrix_transform.hpp>
 
+//Merge sort that doesn't include rendering.
 void MergeSort(glm::vec3* colorArray, unsigned int start, unsigned int end)
 {
 	unsigned int mid = (end + start) / 2;
@@ -15,7 +16,7 @@ void MergeSort(glm::vec3* colorArray, unsigned int start, unsigned int end)
 	{
 		return;
 	}
-
+	std::vector<char> chars;
 	unsigned int firstIndex = 0;
 	unsigned int secondIndex = 0;
 	unsigned int arrayToSortIndex = start;
@@ -58,20 +59,30 @@ void MergeSort(glm::vec3* colorArray, unsigned int start, unsigned int end)
 	}
 }
 
+//Variables used to control animation speed.
 bool paused = false;
 int counter = 0;
+float animationSpeed = 1;
 
+//Merge sort for visualization.
 void MergeSort(glm::vec3* colorArray, unsigned int start, unsigned int end, int xCoord, int yCoord, int zCoord, unsigned int buffer, 
 			   unsigned int programID, GLFWwindow* window, const unsigned int SCR_WIDTH, const unsigned int SCR_HEIGHT, Camera &camera, CodedMesh& cube, 
-			   float& deltaTime, float& lastTime, float& currentTime)
+			   float& deltaTime, float& lastTime, float& currentTime, int& frameCount, double&previousFPSTime)
 {
+	//Closes the window even while sorting.
+	if (glfwWindowShouldClose(window))
+	{
+		return;
+	}
+
 	unsigned int mid = (end + start) / 2;
 	if (start < end)
 	{
 		MergeSort(colorArray, start, mid, xCoord, yCoord, zCoord, buffer, programID,
-			window, SCR_WIDTH, SCR_HEIGHT, camera, cube, deltaTime, lastTime, currentTime);
+			window, SCR_WIDTH, SCR_HEIGHT, camera, cube, deltaTime, lastTime, currentTime, frameCount, previousFPSTime);
+
 		MergeSort(colorArray, mid + 1, end, xCoord, yCoord, zCoord, buffer, programID,
-			window, SCR_WIDTH, SCR_HEIGHT, camera, cube, deltaTime, lastTime, currentTime);
+			window, SCR_WIDTH, SCR_HEIGHT, camera, cube, deltaTime, lastTime, currentTime, frameCount, previousFPSTime);
 	}
 	else
 	{
@@ -118,15 +129,23 @@ void MergeSort(glm::vec3* colorArray, unsigned int start, unsigned int end, int 
 			colorArray[arrayToSortIndex++] = tempArrayTwo[secondIndex++];
 		}
 	}
-	//if (counter++ > 13)
-	//{
+	if (counter++ > animationSpeed)
+	{
 		do
 		{
 			currentTime = glfwGetTime();
 			deltaTime = currentTime - lastTime;
 			lastTime = currentTime;
 
-			ProcessInput(window, camera, deltaTime);
+			frameCount++;
+			if (currentTime - previousFPSTime >= 1.0f)
+			{
+				std::cout << "FPS: " << frameCount << "\r";
+				frameCount = 0;
+				previousFPSTime = currentTime;
+			}
+
+			ProcessInput(window, camera, deltaTime, paused, animationSpeed);
 
 			/* Render here */
 			glClearColor(0.0f, 0.0f, 0.5f, 0.0f);
@@ -135,7 +154,6 @@ void MergeSort(glm::vec3* colorArray, unsigned int start, unsigned int end, int 
 
 			//Added code
 			glUseProgram(programID);
-
 
 			//Pass the projection matrix to shader ( in this case could change every frame )
 			glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
@@ -150,7 +168,6 @@ void MergeSort(glm::vec3* colorArray, unsigned int start, unsigned int end, int 
 			glBufferData(GL_ARRAY_BUFFER, xCoord * yCoord * zCoord * sizeof(glm::vec3), &colorArray[0], GL_DYNAMIC_DRAW);
 			glDrawArraysInstanced(GL_TRIANGLES, 0, 36, xCoord * yCoord * zCoord);
 
-
 			glBindVertexArray(0);
 
 			/* Swap front and back buffers */
@@ -158,11 +175,7 @@ void MergeSort(glm::vec3* colorArray, unsigned int start, unsigned int end, int 
 
 			/* Poll for and process events */
 			glfwPollEvents();
-			if (glfwGetKey(window, GLFW_KEY_ENTER) == GLFW_PRESS)
-			{
-				paused = !paused;
-			}
 		} while (paused);
-		//counter = 0;
-	//}
+		counter = 0;
+	}
 }
