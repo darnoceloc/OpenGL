@@ -6,6 +6,7 @@
 #include <vector>
 #include <iostream>
 
+//Enum for setting camera movement based on keyboard press.
 enum CameraMovement
 {
 	FORWARD,

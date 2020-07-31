@@ -161,6 +161,8 @@
     <ClInclude Include="Renderer\Renderer.h" />
     <ClInclude Include="Shaders\Functions\loadShader.h" />
     <ClInclude Include="Sorts\MergeSort.h" />
+    <ClInclude Include="Sorts\Quicksort.h" />
+    <ClInclude Include="Sorts\Randomizer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

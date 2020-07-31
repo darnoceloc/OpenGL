@@ -56,5 +56,11 @@
     <ClInclude Include="Sorts\MergeSort.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Sorts\Randomizer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sorts\Quicksort.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

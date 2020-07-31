@@ -5,9 +5,12 @@
 * Project 3: Comparison Between Sorting Algorithms(title work in progress)
 * Professor: Kapoor
 *
-* Last Update: 19 June 2020 (Got shape data in a class)
+* Last Update: 23 July 2020 (added speed controls and comments)
 *
-* Need to do: abstract the rendering, might adjust input movement.
+* Need to do: abstract the rendering, might adjust input movement, added GUI or control display, add quicksort.
+
+  Citations: Some code regarding rendering and controls were adapted from https://learnopengl.com/Introduction, accessed last on 7/30/2020,
+             Author: Joey de Vries
 *******************************************************************************************************************************************************/
 
 #include <glew.h>
@@ -25,6 +28,7 @@
 #include "Geometry/CodedMesh.h"
 #include "Renderer/Renderer.h"
 #include "Sorts/MergeSort.h"
+#include "Sorts/Randomizer.h"
 
 #include <vector>
 
@@ -40,7 +44,7 @@ const unsigned int SCR_HEIGHT = 600;
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 
 //Global timing variables.
-float deltaTime = 0.0f;         //Time difference of current frame and last frame.
+float deltaTime = 0.0f;        //Time difference of current frame and last frame.
 float lastTime = 0.0f;         //Keeps track of the time of the last frame. Used to calculate deltaTime.
 
 int main(void)
@@ -99,9 +103,11 @@ int main(void)
     int cubeGridXCoord = 50;
     int cubeGridYCoord = 50;
     int cubeGridZCoord = 50;
+    //Model matrices for each of the smaller cubes.
     glm::mat4* modelMatrices = new glm::mat4[cubeGridXCoord * cubeGridYCoord * cubeGridZCoord];
     renderer.SetModelMatrix(modelMatrices, cubeGridXCoord, cubeGridYCoord, cubeGridZCoord, 0.02f, 0.01f, 0, 0, 0);
 
+    //Create and populate the color array.
     glm::vec3* colors = new glm::vec3[cubeGridXCoord * cubeGridYCoord * cubeGridZCoord];
     int currentIndex = 0;
     for (unsigned int i = 0; i < cubeGridXCoord; i++)
@@ -114,34 +120,39 @@ int main(void)
             }
         }
     }
-    
+
 
     //Mesh to hold the vertex, VAO, and VBO data.
     CodedMesh cube(ShapeVertices::Cube);
     glBindVertexArray(cube.GetVAO());
 
+    //Create, bind, and push the color buffer to the GPU.
     unsigned int colorBuffer;
     glGenBuffers(1, &colorBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
     glBufferData(GL_ARRAY_BUFFER, cubeGridXCoord * cubeGridYCoord * cubeGridZCoord * sizeof(glm::vec3), &colors[0], GL_STATIC_DRAW);
 
-    std::random_shuffle(&colors[0], &colors[cubeGridXCoord * cubeGridYCoord * cubeGridZCoord]);
+    //Shuffle the color array.
+    //std::random_shuffle(&colors[0], &colors[cubeGridXCoord * cubeGridYCoord * cubeGridZCoord]);
+    Randomizer::Randomize(colors, colorBuffer, cubeGridXCoord, cubeGridYCoord, cubeGridZCoord);
 
-
+    //Will sort the color array before rendering, used for testing.
     //MergeSort(colors, 0, cubeGridXCoord * cubeGridYCoord * cubeGridZCoord - 1);
-    glBufferData(GL_ARRAY_BUFFER, cubeGridXCoord * cubeGridYCoord * cubeGridZCoord * sizeof(colors[0]), &colors[0], GL_STATIC_DRAW);
 
+    //Push the new randomized color buffer to GPU.
+    glBufferData(GL_ARRAY_BUFFER, cubeGridXCoord * cubeGridYCoord * cubeGridZCoord * sizeof(colors[0]), &colors[0], GL_STATIC_DRAW);
 
     glEnableVertexAttribArray(1);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (void*)0);
     glVertexAttribDivisor(1, 1);
 
+    //Assign and push matricesBuffer to GPU.
     unsigned int matricesBuffer;
     glGenBuffers(1, &matricesBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, matricesBuffer);
     glBufferData(GL_ARRAY_BUFFER, cubeGridXCoord * cubeGridYCoord * cubeGridZCoord * sizeof(glm::mat4), &modelMatrices[0], GL_STATIC_DRAW);
 
-    // vertex attributes
+    //Vertex attributes for the model matrices
     glEnableVertexAttribArray(2);
     glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void*)0);
     glEnableVertexAttribArray(3);
@@ -158,6 +169,7 @@ int main(void)
 
     glBindVertexArray(0);
 
+    //Time variables used for rendering and FPS. isSorted used to enter sort loop or not.
     double previousFPSTime = glfwGetTime();
     int frameCount = 0;
     bool isSorted = false;
@@ -180,13 +192,12 @@ int main(void)
         //Input
         ProcessInput(window, camera, deltaTime);
 
-
         /* Render here */
         glClearColor(0.0f, 0.0f, 0.5f, 0.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
-        //Added code
+        //Use the shaders chosen.
         glUseProgram(programID);
 
 
@@ -205,11 +216,19 @@ int main(void)
             isSorted = true;
             MergeSort(colors, 0, cubeGridXCoord * cubeGridYCoord * cubeGridZCoord - 1, cubeGridXCoord, cubeGridYCoord, cubeGridZCoord, colorBuffer, programID, 
                       window, SCR_WIDTH, SCR_HEIGHT, camera, cube, deltaTime, lastTime, currentTime, frameCount, previousFPSTime);
+            //Push the final sorted color array, and then draw it.
             glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
             glBufferData(GL_ARRAY_BUFFER, cubeGridXCoord * cubeGridYCoord * cubeGridZCoord * sizeof(glm::vec3), &colors[0], GL_DYNAMIC_DRAW);
             glDrawArraysInstanced(GL_TRIANGLES, 0, 36, cubeGridXCoord * cubeGridYCoord * cubeGridZCoord);
         }
-        
+        //If the r key is pressed while a sort isn't being performed, the color array will be reshuffled.
+        if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS)
+        {
+            Randomizer::Randomize(colors, colorBuffer, cubeGridXCoord, cubeGridYCoord, cubeGridZCoord);
+            isSorted = false;
+            paused = true;
+        }
+
         glDrawArraysInstanced(GL_TRIANGLES, 0, 36, cubeGridXCoord * cubeGridYCoord * cubeGridZCoord);
         
         glBindVertexArray(0);

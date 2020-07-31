@@ -3,7 +3,7 @@
 #include <glm.hpp>
 //#include <gtc/matrix_transform.hpp>
 
-//Merge sort that doesn't include rendering.
+//Merge sort that doesn't include rendering. Used for testing
 void MergeSort(glm::vec3* colorArray, unsigned int start, unsigned int end)
 {
 	unsigned int mid = (end + start) / 2;
@@ -60,7 +60,7 @@ void MergeSort(glm::vec3* colorArray, unsigned int start, unsigned int end)
 }
 
 //Variables used to control animation speed.
-bool paused = false;
+bool paused = true;
 int counter = 0;
 float animationSpeed = 1;
 
@@ -76,6 +76,8 @@ void MergeSort(glm::vec3* colorArray, unsigned int start, unsigned int end, int 
 	}
 
 	unsigned int mid = (end + start) / 2;
+	//Split the array until there's only one element in each part. Then, returns and continues with merging each piece into one array until
+	//the whole array is sorted.
 	if (start < end)
 	{
 		MergeSort(colorArray, start, mid, xCoord, yCoord, zCoord, buffer, programID,
@@ -129,10 +131,12 @@ void MergeSort(glm::vec3* colorArray, unsigned int start, unsigned int end, int 
 			colorArray[arrayToSortIndex++] = tempArrayTwo[secondIndex++];
 		}
 	}
+	//Render loop while sorting. Uses an if condition to control render speed. Raise speed with '=' key, and lower with '-' key.
 	if (counter++ > animationSpeed)
 	{
 		do
 		{
+			//Time variables and fps.
 			currentTime = glfwGetTime();
 			deltaTime = currentTime - lastTime;
 			lastTime = currentTime;
@@ -145,6 +149,7 @@ void MergeSort(glm::vec3* colorArray, unsigned int start, unsigned int end, int 
 				previousFPSTime = currentTime;
 			}
 
+			//Input
 			ProcessInput(window, camera, deltaTime, paused, animationSpeed);
 
 			/* Render here */
@@ -163,6 +168,7 @@ void MergeSort(glm::vec3* colorArray, unsigned int start, unsigned int end, int 
 			glm::mat4 view = camera.GetViewMatrix();
 			glUniformMatrix4fv(glGetUniformLocation(programID, "view"), 1, GL_FALSE, &view[0][0]);
 
+			//Change the color array based on the sorted portion.
 			glBindVertexArray(cube.GetVAO());
 			glBindBuffer(GL_ARRAY_BUFFER, buffer);
 			glBufferData(GL_ARRAY_BUFFER, xCoord * yCoord * zCoord * sizeof(glm::vec3), &colorArray[0], GL_DYNAMIC_DRAW);
