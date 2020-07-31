@@ -4,6 +4,7 @@
 #include <Camera.h>
 #include <CodedMesh.h>
 
+//QuickSort without rendering for testing
 unsigned int Partition(glm::vec3* colorArray, unsigned int low, unsigned int high) {
     unsigned int pivot = colorArray[low].x*10000.0f + colorArray[low].y*100.0f + colorArray[low].z;
     unsigned int up = low, down = high;
@@ -47,6 +48,7 @@ bool paused = false;
 int counter = 0;
 float animationSpeed = 1;
 
+//QuickSort with rendering for visualization
 unsigned int partition(glm::vec3* colorArray, unsigned int low, unsigned int high, int xCoord, int yCoord, int zCoord, unsigned int buffer, 
 			   unsigned int programID, GLFWwindow* window, const unsigned int SCR_WIDTH, const unsigned int SCR_HEIGHT, Camera& camera, CodedMesh& cube, 
 			   float& deltaTime, float& lastTime, float& currentTime, int& frameCount, double&previousFPSTime){
