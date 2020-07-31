@@ -1,6 +1,9 @@
 ﻿#pragma once
 #include <glfw3.h>
 #include <glm.hpp>
+#include <iostream>
+#include "../Geometry/CodedMesh.h"
+#include "../Camera.h"
 
 unsigned int Partition(glm::vec3* colorArray, unsigned int low, unsigned int high)
 {
@@ -116,6 +119,7 @@ unsigned int partition(glm::vec3* colorArray, unsigned int low, unsigned int hig
             ​//Camera/view transformation.
             glm::mat4 view = camera.GetViewMatrix();
             glUniformMatrix4fv(glGetUniformLocation(programID, "view"), 1, GL_FALSE, &view[0][0]);
+
             glBindVertexArray(cube.GetVAO());
             glBindBuffer(GL_ARRAY_BUFFER, buffer);
             glBufferData(GL_ARRAY_BUFFER, xCoord * yCoord * zCoord * sizeof(glm::vec3), &colorArray[0], GL_DYNAMIC_DRAW);
