@@ -1,8 +1,9 @@
 #pragma once
 #include <glfw3.h>
 #include <glm.hpp>
-#include <Camera.h>
-#include <CodedMesh.h>
+#include <../Camera.h>
+#include <../Geometry/CodedMesh.h>
+#include <../Input/Input.h>
 
 //QuickSort without rendering for testing
 unsigned int Partition(glm::vec3* colorArray, unsigned int low, unsigned int high) {
@@ -44,57 +45,69 @@ void QuickSort(glm::vec3* colorArray, unsigned int low, unsigned int high) {
 }
 
 
-bool paused = false;
-int counter = 0;
-float animationSpeed = 1;
+//bool paused = false;
+//int counter = 0;
+//float animationSpeed = 1;
 
 //QuickSort with rendering for visualization
 unsigned int partition(glm::vec3* colorArray, unsigned int low, unsigned int high, int xCoord, int yCoord, int zCoord, unsigned int buffer, 
 			   unsigned int programID, GLFWwindow* window, const unsigned int SCR_WIDTH, const unsigned int SCR_HEIGHT, Camera& camera, CodedMesh& cube, 
-			   float& deltaTime, float& lastTime, float& currentTime, int& frameCount, double&previousFPSTime){
-                if (glfwWindowShouldClose(window)){
-                        return;
-                }
-                unsigned int pivot = colorArray[low].x*10000.0f + colorArray[low].y*100.0f + colorArray[low].z;
-                unsigned int up = low, down = high;
-                while(up < down){
-                    for(int j = up; j < high; j++){
-                        if(colorArray[up].x*10000.0f + colorArray[up].y*100.0f + colorArray[up].z > pivot) {
-                            break;
-                        }
-                        ++up;
-                    }
-                    for(int j = high; j > low; j--){
-                        if(colorArray[down].x*10000.0f + colorArray[down].y*100.0f + colorArray[down].z < pivot) {
-                            break;
-                        }
-                        --down;
-                    }
-                    if(up < down){
-                        glm::vec3 temp = colorArray[down];
-                        colorArray[down] = colorArray[up];
-                        colorArray[up] = temp;
-                    }
-                }
-            }
+			   float& deltaTime, float& lastTime, float& currentTime, int& frameCount, double&previousFPSTime)
+{
+     if (glfwWindowShouldClose(window))
+     {
+             return -1;
+     }
+
+     unsigned int pivot = colorArray[low].x * 10000.0f + colorArray[low].y * 100.0f + colorArray[low].z;
+     unsigned int up = low, down = high;
+     
+     while(up < down)
+     {
+         for(int j = up; j < high; j++)
+         {
+             if(colorArray[up].x * 10000.0f + colorArray[up].y * 100.0f + colorArray[up].z > pivot)
+             {
+                 break;
+             }
+             ++up;
+         }
+         for(int j = high; j > low; j--)
+         {
+             if(colorArray[down].x * 10000.0f + colorArray[down].y * 100.0f + colorArray[down].z < pivot)
+             {
+                 break;
+             }
+             --down;
+         }
+         if(up < down)
+         {
+             glm::vec3 temp = colorArray[down];
+             colorArray[down] = colorArray[up];
+             colorArray[up] = temp;
+         }
+     }
+}
 
 void QuickSort(glm::vec3* colorArray, unsigned int low, unsigned int high, int xCoord, int yCoord, int zCoord, unsigned int buffer, 
 			   unsigned int programID, GLFWwindow* window, const unsigned int SCR_WIDTH, const unsigned int SCR_HEIGHT, Camera& camera, CodedMesh& cube, 
-			   float& deltaTime, float& lastTime, float& currentTime, int& frameCount, double&previousFPSTime){
+			   float& deltaTime, float& lastTime, float& currentTime, int& frameCount, double&previousFPSTime)
+{
+    if(low < high)
+    {
+        unsigned int pivot = partition(colorArray, low, high, xCoord, yCoord, zCoord, buffer, programID, window, 
+                                       SCR_WIDTH, SCR_HEIGHT, camera, cube, deltaTime, lastTime, currentTime, frameCount, previousFPSTime); 
 
-    if(low < high) {
-
-    unsigned int pivot = partition(colorArray, low, high, xCoord, yCoord, zCoord, buffer, 
-    programID, window, SCR_WIDTH, SCR_HEIGHT, camera, cube, deltaTime, lastTime, currentTime, frameCount, previousFPSTime); 
-    QuickSort(colorArray, low, pivot - 1, xCoord, yCoord, zCoord, buffer, 
-    programID, window, SCR_WIDTH, SCR_HEIGHT, camera, cube, deltaTime, lastTime, currentTime, frameCount, previousFPSTime);
-    QuickSort(colorArray, pivot + 1, high, xCoord, yCoord, zCoord, buffer, 
-    programID, window, SCR_WIDTH, SCR_HEIGHT, camera, cube, deltaTime, lastTime, currentTime, frameCount, previousFPSTime); 
-
+        QuickSort(colorArray, low, pivot - 1, xCoord, yCoord, zCoord, buffer, programID, window,
+                  SCR_WIDTH, SCR_HEIGHT, camera, cube, deltaTime, lastTime, currentTime, frameCount, previousFPSTime);
+        QuickSort(colorArray, pivot + 1, high, xCoord, yCoord, zCoord, buffer, programID, window,
+                  SCR_WIDTH, SCR_HEIGHT, camera, cube, deltaTime, lastTime, currentTime, frameCount, previousFPSTime); 
     }          
                     
-    if (counter++ > animationSpeed){
-		do {
+    if (counter++ > animationSpeed)
+    {
+		do
+        {
 			currentTime = glfwGetTime();
 			deltaTime = currentTime - lastTime;
 			lastTime = currentTime;

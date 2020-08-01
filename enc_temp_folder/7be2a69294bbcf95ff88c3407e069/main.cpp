@@ -5,7 +5,7 @@
 * Project 3: Comparison Between Sorting Algorithms(title work in progress)
 * Professor: Kapoor
 *
-* Last Update: 31 July 2020 (added speed controls and comments)
+* Last Update: 23 July 2020 (added speed controls and comments)
 *
 * Need to do: abstract the rendering, might adjust input movement, added GUI or control display, add quicksort.
 
