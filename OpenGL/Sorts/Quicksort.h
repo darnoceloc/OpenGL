@@ -48,7 +48,7 @@ void QuickSort(glm::vec3* colorArray, unsigned int low, unsigned int high) {
 //bool paused = false;
 //int counter = 0;
 //float animationSpeed = 1;
-
+int no = 0;
 //QuickSort with rendering for visualization
 unsigned int partition(glm::vec3* colorArray, unsigned int low, unsigned int high, int xCoord, int yCoord, int zCoord, unsigned int buffer, 
 			   unsigned int programID, GLFWwindow* window, const unsigned int SCR_WIDTH, const unsigned int SCR_HEIGHT, Camera& camera, CodedMesh& cube, 
@@ -59,34 +59,39 @@ unsigned int partition(glm::vec3* colorArray, unsigned int low, unsigned int hig
              return -1;
      }
 
-     unsigned int pivot = colorArray[low].x * 10000.0f + colorArray[low].y * 100.0f + colorArray[low].z;
-     unsigned int up = low, down = high;
-     
-     while(up < down)
+     unsigned int pivot = colorArray[high].x * 10000.0f + colorArray[high].y * 100.0f + colorArray[high].z;
+     //unsigned int up = low, down = high;
+     int lastElementSwapped = low - 1;
+
+     for(int j = low; j < high; j++)
      {
-         for(int j = up; j < high; j++)
+         if(colorArray[j].x * 10000.0f + colorArray[j].y * 100.0f + colorArray[j].z <= pivot)
          {
-             if(colorArray[up].x * 10000.0f + colorArray[up].y * 100.0f + colorArray[up].z > pivot)
-             {
-                 break;
-             }
-             ++up;
-         }
-         for(int j = high; j > low; j--)
-         {
-             if(colorArray[down].x * 10000.0f + colorArray[down].y * 100.0f + colorArray[down].z < pivot)
-             {
-                 break;
-             }
-             --down;
-         }
-         if(up < down)
-         {
-             glm::vec3 temp = colorArray[down];
-             colorArray[down] = colorArray[up];
-             colorArray[up] = temp;
+             lastElementSwapped++;
+             glm::vec3 temp = colorArray[lastElementSwapped];
+             colorArray[lastElementSwapped] = colorArray[j];
+             colorArray[j] = temp;
          }
      }
+     /*for(int j = high; j > low; j--)
+     {
+         std::cout << down << std::endl;
+         if(colorArray[down].x * 10000.0f + colorArray[down].y * 100.0f + colorArray[down].z < pivot)
+         {
+             break;
+         }
+         --down;
+     }
+     if(up < down)
+     {
+         glm::vec3 temp = colorArray[down];
+         colorArray[down] = colorArray[up];
+         colorArray[up] = temp;
+     }*/
+     glm::vec3 temp = colorArray[++lastElementSwapped];
+     colorArray[lastElementSwapped] = colorArray[high];
+     colorArray[high] = temp;
+     return lastElementSwapped;
 }
 
 void QuickSort(glm::vec3* colorArray, unsigned int low, unsigned int high, int xCoord, int yCoord, int zCoord, unsigned int buffer, 

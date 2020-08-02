@@ -191,9 +191,9 @@ int main(void)
     //INSTANCING
     Renderer renderer;
     //The coords are for placing the cubes, there will be x * y * z cubes.
-    int cubeGridXCoord = 50;
-    int cubeGridYCoord = 50;
-    int cubeGridZCoord = 50;
+    int cubeGridXCoord = 10;
+    int cubeGridYCoord = 10;
+    int cubeGridZCoord = 10;
     //Model matrices for each of the smaller cubes.
     glm::mat4* modelMatrices = new glm::mat4[cubeGridXCoord * cubeGridYCoord * cubeGridZCoord];
     renderer.SetModelMatrix(modelMatrices, cubeGridXCoord, cubeGridYCoord, cubeGridZCoord, 0.02f, 0.01f, 0, 0, 0);
