@@ -43,7 +43,6 @@ inline void Mouse(GLFWwindow* window, double xPos, double yPos);
 
 //Callbacks for menu and pause.
 void MenuCallback(GLFWwindow* window, int key, int code, int action, int mods);
-void PauseCallback(GLFWwindow* window, int key, int code, int action, int mods);
 
 //Global screen settings.
 const unsigned int SCR_WIDTH  = 800;
@@ -90,7 +89,6 @@ int main(void)
     glfwSetFramebufferSizeCallback(window, FrameBufferSizeCallback);
     glfwSetCursorPosCallback(window, Mouse);
     glfwSetKeyCallback(window, MenuCallback);
-    glfwSetKeyCallback(window, PauseCallback);
 
     //Tells GLFW to capture our mouse.
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -299,10 +297,10 @@ int main(void)
         if (!isSorted)
         {
             isSorted = true;
-            //MergeSort(colors, 0, cubeGridXCoord * cubeGridYCoord * cubeGridZCoord - 1, cubeGridXCoord, cubeGridYCoord, cubeGridZCoord, colorBuffer, programID, 
-            //          window, SCR_WIDTH, SCR_HEIGHT, camera, cube, deltaTime, lastTime, currentTime, frameCount, previousFPSTime);
-            QuickSort(colors, 0, cubeGridXCoord * cubeGridYCoord * cubeGridZCoord - 1, cubeGridXCoord, cubeGridYCoord, cubeGridZCoord, colorBuffer, programID,
+            MergeSort(colors, 0, cubeGridXCoord * cubeGridYCoord * cubeGridZCoord - 1, cubeGridXCoord, cubeGridYCoord, cubeGridZCoord, colorBuffer, programID, 
                       window, SCR_WIDTH, SCR_HEIGHT, camera, cube, deltaTime, lastTime, currentTime, frameCount, previousFPSTime);
+            //QuickSort(colors, 0, cubeGridXCoord * cubeGridYCoord * cubeGridZCoord - 1, cubeGridXCoord, cubeGridYCoord, cubeGridZCoord, colorBuffer, programID,
+            //         window, SCR_WIDTH, SCR_HEIGHT, camera, cube, deltaTime, lastTime, currentTime, frameCount, previousFPSTime);
             //Push the final sorted color array, and then draw it.
             glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
             glBufferData(GL_ARRAY_BUFFER, cubeGridXCoord * cubeGridYCoord * cubeGridZCoord * sizeof(glm::vec3), &colors[0], GL_DYNAMIC_DRAW);
@@ -317,11 +315,6 @@ int main(void)
             paused = true;
             counter = 2;
         }
-        //If the m key is pressed while not sorting it will toggle menu.
-        /*if (glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS)
-        {
-            menu = !menu;
-        }*/
         glDrawArraysInstanced(GL_TRIANGLES, 0, 36, cubeGridXCoord * cubeGridYCoord * cubeGridZCoord);
         
         if (menu)
@@ -385,10 +378,6 @@ void MenuCallback(GLFWwindow* window, int key, int code, int action, int mods)
     {
         menu = !menu;
     }
-}
-void PauseCallback(GLFWwindow* window, int key, int code, int action, int mods)
-{
-    //If the m key is pressed while not sorting it will toggle menu.
     if (key == GLFW_KEY_ENTER && action == GLFW_PRESS)
     {
         paused = !paused;
