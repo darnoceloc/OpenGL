@@ -61,7 +61,7 @@ void MergeSort(glm::vec3* colorArray, unsigned int start, unsigned int end)
 
 //Variables used to control animation speed.
 bool paused = true;
-int counter = 0;
+int counter = 2;
 float animationSpeed = 1;
 
 //Merge sort for visualization.

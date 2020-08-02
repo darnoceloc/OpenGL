@@ -92,10 +92,10 @@ void ProcessInput(GLFWwindow* window, Camera& camera, float& deltaTime, bool& pa
     {
         camera.ProcessKeyboard(DOWN, deltaTime);
     }
-    if (glfwGetKey(window, GLFW_KEY_ENTER) == GLFW_PRESS)
+    /*if (glfwGetKey(window, GLFW_KEY_ENTER) == GLFW_PRESS)
     {
         paused = !paused;
-    }
+    }*/
     if (glfwGetKey(window, GLFW_KEY_MINUS) ==GLFW_PRESS && animationSpeed > 1)
     {
         animationSpeed -= 0.5f;

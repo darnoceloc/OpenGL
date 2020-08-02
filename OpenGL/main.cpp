@@ -7,7 +7,7 @@
 *
 * Last Update: 31 July 2020 (added speed controls and comments)
 *
-* Need to do: abstract the rendering, might adjust input movement, added GUI or control display, add quicksort.
+* Need to do: abstract the rendering, fix process input, add controls to switch between merge and quick.
 
   Citations: Some code regarding rendering and controls were adapted from https://learnopengl.com/Introduction, accessed last on 7/30/2020,
              Author: Joey de Vries
@@ -41,6 +41,10 @@
 void FrameBufferSizeCallback(GLFWwindow* window, int width, int height);
 inline void Mouse(GLFWwindow* window, double xPos, double yPos);
 
+//Callbacks for menu and pause.
+void MenuCallback(GLFWwindow* window, int key, int code, int action, int mods);
+void PauseCallback(GLFWwindow* window, int key, int code, int action, int mods);
+
 //Global screen settings.
 const unsigned int SCR_WIDTH  = 800;
 const unsigned int SCR_HEIGHT = 600;
@@ -51,6 +55,9 @@ Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 //Global timing variables.
 float deltaTime = 0.0f;        //Time difference of current frame and last frame.
 float lastTime = 0.0f;         //Keeps track of the time of the last frame. Used to calculate deltaTime.
+
+//Bool to toggle menu
+bool menu = false;
 
 int main(void)
 {
@@ -82,6 +89,8 @@ int main(void)
     //Added code
     glfwSetFramebufferSizeCallback(window, FrameBufferSizeCallback);
     glfwSetCursorPosCallback(window, Mouse);
+    glfwSetKeyCallback(window, MenuCallback);
+    glfwSetKeyCallback(window, PauseCallback);
 
     //Tells GLFW to capture our mouse.
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -104,27 +113,9 @@ int main(void)
     std::cout << "Using openGL version: " << glGetString(GL_VERSION) << std::endl;
 
 
-
-
-
     ///////////////////MENU TESTING
 
         /*Menu Texture*/
-
-    // glad: load all OpenGL function pointers
-    // ---------------------------------------
-    /*if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-    {
-        std::cout << "Failed to initialize GLAD" << std::endl;
-        return -1;
-    }*/
-
-    // build and compile our shader zprogram
-    // ------------------------------------
-    //Shader ourShader("4.1.texture.vs", "4.1.texture.fs");
-
-    // set up vertex data (and buffer(s)) and configure vertex attributes
-    // ------------------------------------------------------------------
     float vertices[] = {
         // positions          // colors           // texture coords
          1.0f,  1.0f,  0.0f,   /*1.0f, 0.0f, 0.0f,*/  1.0f, 1.0f, // top right
@@ -191,9 +182,9 @@ int main(void)
     //INSTANCING
     Renderer renderer;
     //The coords are for placing the cubes, there will be x * y * z cubes.
-    int cubeGridXCoord = 10;
-    int cubeGridYCoord = 10;
-    int cubeGridZCoord = 10;
+    int cubeGridXCoord = 50;
+    int cubeGridYCoord = 50;
+    int cubeGridZCoord = 50;
     //Model matrices for each of the smaller cubes.
     glm::mat4* modelMatrices = new glm::mat4[cubeGridXCoord * cubeGridYCoord * cubeGridZCoord];
     renderer.SetModelMatrix(modelMatrices, cubeGridXCoord, cubeGridYCoord, cubeGridZCoord, 0.02f, 0.01f, 0, 0, 0);
@@ -263,7 +254,6 @@ int main(void)
     double previousFPSTime = glfwGetTime();
     int frameCount = 0;
     bool isSorted = false;
-    bool menu = false;
 
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
@@ -325,12 +315,13 @@ int main(void)
             Randomizer::Randomize(colors, colorBuffer, cubeGridXCoord, cubeGridYCoord, cubeGridZCoord);
             isSorted = false;
             paused = true;
+            counter = 2;
         }
         //If the m key is pressed while not sorting it will toggle menu.
-        if (glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS)
+        /*if (glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS)
         {
             menu = !menu;
-        }
+        }*/
         glDrawArraysInstanced(GL_TRIANGLES, 0, 36, cubeGridXCoord * cubeGridYCoord * cubeGridZCoord);
         
         if (menu)
@@ -385,4 +376,21 @@ void FrameBufferSizeCallback(GLFWwindow* window, int width, int height)
 inline void Mouse(GLFWwindow* window, double xPos, double yPos)
 {
     MouseCallback(window, xPos, yPos, camera);
+}
+
+void MenuCallback(GLFWwindow* window, int key, int code, int action, int mods)
+{
+    //If the m key is pressed while not sorting it will toggle menu.
+    if (key == GLFW_KEY_M && action == GLFW_PRESS)
+    {
+        menu = !menu;
+    }
+}
+void PauseCallback(GLFWwindow* window, int key, int code, int action, int mods)
+{
+    //If the m key is pressed while not sorting it will toggle menu.
+    if (key == GLFW_KEY_ENTER && action == GLFW_PRESS)
+    {
+        paused = !paused;
+    }
 }
