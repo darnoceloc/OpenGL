@@ -7,33 +7,22 @@
 
 //QuickSort without rendering for testing
 unsigned int Partition(glm::vec3* colorArray, unsigned int low, unsigned int high) {
-    unsigned int pivot = colorArray[low].x*10000.0f + colorArray[low].y*100.0f + colorArray[low].z;
-    unsigned int up = low, down = high;
+    unsigned int pivot = colorArray[high].x*10000.0f + colorArray[high].y*100.0f + colorArray[high].z;
+    unsigned int down = low-1;
 
-    while(up < down){
-        for(int j = up; j < high; j++){
-            if(colorArray[up].x*10000.0f + colorArray[up].y*100.0f + colorArray[up].z > pivot) {
-                break;
-            }
-            ++up;
-        }
-        for(int j = high; j > low; j--){
-            if(colorArray[down].x*10000.0f + colorArray[down].y*100.0f + colorArray[down].z < pivot) {
-                break;
-            }
-            --down;
-        }
-        if(up < down){
+    for(int j = low; j <= high - 1; j++){
+        if(colorArray[j].x*10000.0f + colorArray[j].y*100.0f + colorArray[j].z < pivot) {
+            down++;
             glm::vec3 temp = colorArray[down];
-            colorArray[down] = colorArray[up];
-            colorArray[up] = temp;
+            colorArray[down] = colorArray[j];
+            colorArray[j] = temp;
         }
     }
 
-    glm::vec3 temp = colorArray[down];
-    colorArray[down] = colorArray[low];
-    colorArray[low] = temp;
-    return down;
+    glm::vec3 temp = colorArray[down + 1];
+    colorArray[down + 1] = colorArray[high];
+    colorArray[high] = temp;
+    return down + 1;
 }
 
 void QuickSort(glm::vec3* colorArray, unsigned int low, unsigned int high) {
@@ -58,35 +47,23 @@ unsigned int partition(glm::vec3* colorArray, unsigned int low, unsigned int hig
      {
              return -1;
      }
+	
+    unsigned int pivot = colorArray[high].x*10000.0f + colorArray[high].y*100.0f + colorArray[high].z;
+    unsigned int down = low-1;
 
-     unsigned int pivot = colorArray[low].x * 10000.0f + colorArray[low].y * 100.0f + colorArray[low].z;
-     unsigned int up = low, down = high;
-     
-     while(up < down)
-     {
-         for(int j = up; j < high; j++)
-         {
-             if(colorArray[up].x * 10000.0f + colorArray[up].y * 100.0f + colorArray[up].z > pivot)
-             {
-                 break;
-             }
-             ++up;
-         }
-         for(int j = high; j > low; j--)
-         {
-             if(colorArray[down].x * 10000.0f + colorArray[down].y * 100.0f + colorArray[down].z < pivot)
-             {
-                 break;
-             }
-             --down;
-         }
-         if(up < down)
-         {
-             glm::vec3 temp = colorArray[down];
-             colorArray[down] = colorArray[up];
-             colorArray[up] = temp;
-         }
-     }
+    for(int j = low; j <= high - 1; j++){
+        if(colorArray[j].x*10000.0f + colorArray[j].y*100.0f + colorArray[j].z < pivot) {
+            down++;
+            glm::vec3 temp = colorArray[down];
+            colorArray[down] = colorArray[j];
+            colorArray[j] = temp;
+        }
+    }
+
+    glm::vec3 temp = colorArray[down + 1];
+    colorArray[down + 1] = colorArray[high];
+    colorArray[high] = temp;
+    return down + 1;
 }
 
 void QuickSort(glm::vec3* colorArray, unsigned int low, unsigned int high, int xCoord, int yCoord, int zCoord, unsigned int buffer, 
