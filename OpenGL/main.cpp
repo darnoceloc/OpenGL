@@ -57,6 +57,7 @@ float lastTime = 0.0f;         //Keeps track of the time of the last frame. Used
 
 //Bool to toggle menu
 bool menu = false;
+bool isMerge = true;
 
 int main(void)
 {
@@ -294,13 +295,20 @@ int main(void)
 
         //Bind the appropriate VAO and then call merge sort to sort during runtime.
         glBindVertexArray(cube.GetVAO());
-        if (!isSorted)
+        if (!isSorted && !paused)
         {
             isSorted = true;
-            MergeSort(colors, 0, cubeGridXCoord * cubeGridYCoord * cubeGridZCoord - 1, cubeGridXCoord, cubeGridYCoord, cubeGridZCoord, colorBuffer, programID, 
-                      window, SCR_WIDTH, SCR_HEIGHT, camera, cube, deltaTime, lastTime, currentTime, frameCount, previousFPSTime);
-            //QuickSort(colors, 0, cubeGridXCoord * cubeGridYCoord * cubeGridZCoord - 1, cubeGridXCoord, cubeGridYCoord, cubeGridZCoord, colorBuffer, programID,
-            //         window, SCR_WIDTH, SCR_HEIGHT, camera, cube, deltaTime, lastTime, currentTime, frameCount, previousFPSTime);
+            if (isMerge)
+            {
+                MergeSort(colors, 0, cubeGridXCoord * cubeGridYCoord * cubeGridZCoord - 1, cubeGridXCoord, cubeGridYCoord, cubeGridZCoord, colorBuffer, programID,
+                    window, SCR_WIDTH, SCR_HEIGHT, camera, cube, deltaTime, lastTime, currentTime, frameCount, previousFPSTime);
+            }
+            else
+            {
+                QuickSort(colors, 0, cubeGridXCoord * cubeGridYCoord * cubeGridZCoord - 1, cubeGridXCoord, cubeGridYCoord, cubeGridZCoord, colorBuffer, programID,
+                    window, SCR_WIDTH, SCR_HEIGHT, camera, cube, deltaTime, lastTime, currentTime, frameCount, previousFPSTime);
+            }
+            
             //Push the final sorted color array, and then draw it.
             glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
             glBufferData(GL_ARRAY_BUFFER, cubeGridXCoord * cubeGridYCoord * cubeGridZCoord * sizeof(glm::vec3), &colors[0], GL_DYNAMIC_DRAW);
@@ -334,7 +342,6 @@ int main(void)
             glUniformMatrix4fv(glGetUniformLocation(programIDTwo, "model"), 1, GL_FALSE, &model[0][0]);
 
             glm::vec3 position = { camera.position.x -0.5f, camera.position.y -0.5f, camera.position.z - 1.2f};
-            std::cout << camera.position.x << " " << camera.position.y << " " << camera.position.z << std::endl;
             glUniform3fv(glGetUniformLocation(programIDTwo, "position"), 1, &position[0]);
 
             glBindVertexArray(VAO);
@@ -381,5 +388,15 @@ void MenuCallback(GLFWwindow* window, int key, int code, int action, int mods)
     if (key == GLFW_KEY_ENTER && action == GLFW_PRESS)
     {
         paused = !paused;
+    }
+    if (key == GLFW_KEY_1 && action == GLFW_PRESS)
+    {
+        isMerge = true;
+        std::cout << "Now using merge sort." << std::endl;
+    }
+    if (key == GLFW_KEY_2 && action == GLFW_PRESS)
+    {
+        isMerge = false;
+        std::cout << "Now using quick sort." << std::endl;
     }
 }
