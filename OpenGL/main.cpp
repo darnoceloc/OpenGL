@@ -13,9 +13,6 @@
              Author: Joey de Vries
              https://learnopengl.com/Getting-started/Textures - used to load menu texture into rectangle
 *******************************************************************************************************************************************************/
-
-#include <glew.h>
-#include <glfw3.h>
 #include <iostream>
 #include <glm.hpp>
 #include <gtc/matrix_transform.hpp>
