@@ -1,4 +1,4 @@
-# OpenGL
+# OpenGL Algorithm Visualizations
 Project used for visualizing various algorithms and data structures.
 
 Controls:
