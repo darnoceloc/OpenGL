@@ -1,5 +1,5 @@
 # OpenGL Algorithm Visualizations
-Project used for visualizing various algorithms and data structures.
+Project used for visualizing various algorithms and data structures. Was also used to learn OpenGL.
 
 Controls:
 - w,a,s,d for moving forward, the the left, backward, and to the right respectively.
