@@ -12,7 +12,7 @@
                 "${workspaceFolder}/Dependencies/GLFW/include/**",
                 "${workspaceFolder}/Dependencies/GLEW/include/**",
                 "/home/darnoc/Documents/vcpkg/**",
-                "${workspaceFolder}/OpenGL/glm"
+                "${workspaceFolder}/OpenGL/glm/**"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/g++-8",
