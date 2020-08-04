@@ -2,18 +2,6 @@
 	"entries" : 
 	[
 		{
-			"name" : "/home/darnoc/Documents/OpenGL/",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Path to a library."
-				}
-			],
-			"type" : "FILEPATH",
-			"value" : "/usr/lib/x86_64-linux-gnu/libOpenGL.so"
-		},
-		{
 			"name" : "BUILD_TESTING",
 			"properties" : 
 			[
@@ -55,7 +43,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/usr/bin/addr2line"
+			"value" : "/usr/bin/x86_64-linux-gnu-addr2line"
 		},
 		{
 			"name" : "CMAKE_AR",
@@ -71,7 +59,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/usr/bin/ar"
+			"value" : "/usr/bin/x86_64-linux-gnu-ar"
 		},
 		{
 			"name" : "CMAKE_BUILD_TYPE",
@@ -187,7 +175,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/usr/bin/g++-8"
+			"value" : "/usr/bin/x86_64-linux-gnu-g++-8"
 		},
 		{
 			"name" : "CMAKE_CXX_COMPILER_AR",
@@ -203,7 +191,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/usr/bin/gcc-ar-8"
+			"value" : "/usr/bin/x86_64-linux-gnu-gcc-ar-8"
 		},
 		{
 			"name" : "CMAKE_CXX_COMPILER_RANLIB",
@@ -219,7 +207,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/usr/bin/gcc-ranlib-8"
+			"value" : "/usr/bin/x86_64-linux-gnu-gcc-ranlib-8"
 		},
 		{
 			"name" : "CMAKE_CXX_FLAGS",
@@ -315,7 +303,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/usr/bin/gcc-8"
+			"value" : "/usr/bin/x86_64-linux-gnu-gcc-8"
 		},
 		{
 			"name" : "CMAKE_C_COMPILER_AR",
@@ -331,7 +319,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/usr/bin/gcc-ar-8"
+			"value" : "/usr/bin/x86_64-linux-gnu-gcc-ar-8"
 		},
 		{
 			"name" : "CMAKE_C_COMPILER_RANLIB",
@@ -347,7 +335,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/usr/bin/gcc-ranlib-8"
+			"value" : "/usr/bin/x86_64-linux-gnu-gcc-ranlib-8"
 		},
 		{
 			"name" : "CMAKE_C_FLAGS",
@@ -659,7 +647,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/usr/bin/ld"
+			"value" : "/usr/bin/x86_64-linux-gnu-ld"
 		},
 		{
 			"name" : "CMAKE_MAKE_PROGRAM",
@@ -771,7 +759,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/usr/bin/nm"
+			"value" : "/usr/bin/x86_64-linux-gnu-nm"
 		},
 		{
 			"name" : "CMAKE_NUMBER_OF_MAKEFILES",
@@ -799,7 +787,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/usr/bin/objcopy"
+			"value" : "/usr/bin/x86_64-linux-gnu-objcopy"
 		},
 		{
 			"name" : "CMAKE_OBJDUMP",
@@ -815,7 +803,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/usr/bin/objdump"
+			"value" : "/usr/bin/x86_64-linux-gnu-objdump"
 		},
 		{
 			"name" : "CMAKE_PLATFORM_INFO_INITIALIZED",
@@ -939,7 +927,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/usr/bin/ranlib"
+			"value" : "/usr/bin/x86_64-linux-gnu-ranlib"
 		},
 		{
 			"name" : "CMAKE_READELF",
@@ -955,7 +943,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/usr/bin/readelf"
+			"value" : "/usr/bin/x86_64-linux-gnu-readelf"
 		},
 		{
 			"name" : "CMAKE_ROOT",
@@ -1175,7 +1163,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/usr/bin/strip"
+			"value" : "/usr/bin/x86_64-linux-gnu-strip"
 		},
 		{
 			"name" : "CMAKE_UNAME",
@@ -1586,18 +1574,6 @@
 			"value" : "[/usr/include][/usr/lib/x86_64-linux-gnu/libGLEW.so][v2.0.0()]"
 		},
 		{
-			"name" : "FIND_PACKAGE_MESSAGE_DETAILS_OpenGL",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Details about finding OpenGL"
-				}
-			],
-			"type" : "INTERNAL",
-			"value" : "[/usr/lib/x86_64-linux-gnu/libOpenGL.so][/usr/lib/x86_64-linux-gnu/libGLX.so][/usr/include][c ][v()]"
-		},
-		{
 			"name" : "FIND_PACKAGE_MESSAGE_DETAILS_PkgConfig",
 			"properties" : 
 			[
@@ -1626,30 +1602,6 @@
 			"value" : "/usr/bin/git"
 		},
 		{
-			"name" : "GL",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Path to a library."
-				}
-			],
-			"type" : "FILEPATH",
-			"value" : "GL-NOTFOUND"
-		},
-		{
-			"name" : "GLEW",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Path to a library."
-				}
-			],
-			"type" : "FILEPATH",
-			"value" : "GLEW-NOTFOUND"
-		},
-		{
 			"name" : "GLEW_DIR",
 			"properties" : 
 			[
@@ -1676,18 +1628,6 @@
 			],
 			"type" : "PATH",
 			"value" : "/usr/include"
-		},
-		{
-			"name" : "GLEW_LIBRARY",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Path to a library."
-				}
-			],
-			"type" : "FILEPATH",
-			"value" : "GLEW_LIBRARY-NOTFOUND"
 		},
 		{
 			"name" : "GLEW_SHARED_LIBRARY_DEBUG",
@@ -1752,18 +1692,6 @@
 			],
 			"type" : "FILEPATH",
 			"value" : "/usr/lib64/libGLEW.a"
-		},
-		{
-			"name" : "GLFW3",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Path to a library."
-				}
-			],
-			"type" : "FILEPATH",
-			"value" : "GLFW3-NOTFOUND"
 		},
 		{
 			"name" : "GLFW_CFLAGS",
@@ -2250,150 +2178,6 @@
 			"value" : ""
 		},
 		{
-			"name" : "OPENGL_EGL_INCLUDE_DIR",
-			"properties" : 
-			[
-				{
-					"name" : "ADVANCED",
-					"value" : "1"
-				},
-				{
-					"name" : "HELPSTRING",
-					"value" : "Path to a file."
-				}
-			],
-			"type" : "PATH",
-			"value" : "/usr/include"
-		},
-		{
-			"name" : "OPENGL_GLX_INCLUDE_DIR",
-			"properties" : 
-			[
-				{
-					"name" : "ADVANCED",
-					"value" : "1"
-				},
-				{
-					"name" : "HELPSTRING",
-					"value" : "Path to a file."
-				}
-			],
-			"type" : "PATH",
-			"value" : "/usr/include"
-		},
-		{
-			"name" : "OPENGL_INCLUDE_DIR",
-			"properties" : 
-			[
-				{
-					"name" : "ADVANCED",
-					"value" : "1"
-				},
-				{
-					"name" : "HELPSTRING",
-					"value" : "Path to a file."
-				}
-			],
-			"type" : "PATH",
-			"value" : "/usr/include"
-		},
-		{
-			"name" : "OPENGL_egl_LIBRARY",
-			"properties" : 
-			[
-				{
-					"name" : "ADVANCED",
-					"value" : "1"
-				},
-				{
-					"name" : "HELPSTRING",
-					"value" : "Path to a library."
-				}
-			],
-			"type" : "FILEPATH",
-			"value" : "/usr/lib/x86_64-linux-gnu/libEGL.so"
-		},
-		{
-			"name" : "OPENGL_gl_LIBRARY",
-			"properties" : 
-			[
-				{
-					"name" : "ADVANCED",
-					"value" : "1"
-				},
-				{
-					"name" : "HELPSTRING",
-					"value" : "Path to a library."
-				}
-			],
-			"type" : "FILEPATH",
-			"value" : "/usr/lib/x86_64-linux-gnu/libGL.so"
-		},
-		{
-			"name" : "OPENGL_glu_LIBRARY",
-			"properties" : 
-			[
-				{
-					"name" : "ADVANCED",
-					"value" : "1"
-				},
-				{
-					"name" : "HELPSTRING",
-					"value" : "Path to a library."
-				}
-			],
-			"type" : "FILEPATH",
-			"value" : "/usr/lib/x86_64-linux-gnu/libGLU.so"
-		},
-		{
-			"name" : "OPENGL_glx_LIBRARY",
-			"properties" : 
-			[
-				{
-					"name" : "ADVANCED",
-					"value" : "1"
-				},
-				{
-					"name" : "HELPSTRING",
-					"value" : "Path to a library."
-				}
-			],
-			"type" : "FILEPATH",
-			"value" : "/usr/lib/x86_64-linux-gnu/libGLX.so"
-		},
-		{
-			"name" : "OPENGL_opengl_LIBRARY",
-			"properties" : 
-			[
-				{
-					"name" : "ADVANCED",
-					"value" : "1"
-				},
-				{
-					"name" : "HELPSTRING",
-					"value" : "Path to a library."
-				}
-			],
-			"type" : "FILEPATH",
-			"value" : "/usr/lib/x86_64-linux-gnu/libOpenGL.so"
-		},
-		{
-			"name" : "OPENGL_xmesa_INCLUDE_DIR",
-			"properties" : 
-			[
-				{
-					"name" : "ADVANCED",
-					"value" : "1"
-				},
-				{
-					"name" : "HELPSTRING",
-					"value" : "Path to a file."
-				}
-			],
-			"type" : "PATH",
-			"value" : "OPENGL_xmesa_INCLUDE_DIR-NOTFOUND"
-		},
-		{
 			"name" : "OpenGL_BINARY_DIR",
 			"properties" : 
 			[
@@ -2448,18 +2232,6 @@
 			],
 			"type" : "FILEPATH",
 			"value" : "/usr/bin/pkg-config"
-		},
-		{
-			"name" : "PROTOBUF_LIBRARY",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Path to a library."
-				}
-			],
-			"type" : "FILEPATH",
-			"value" : "/usr/lib/x86_64-linux-gnu/libprotobuf.so"
 		},
 		{
 			"name" : "SITE",
@@ -2538,18 +2310,6 @@
 			"value" : "1"
 		},
 		{
-			"name" : "gl3w_DIR",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "The directory containing a CMake configuration file for gl3w."
-				}
-			],
-			"type" : "PATH",
-			"value" : "gl3w_DIR-NOTFOUND"
-		},
-		{
 			"name" : "glfw3_DIR",
 			"properties" : 
 			[
@@ -2560,78 +2320,6 @@
 			],
 			"type" : "PATH",
 			"value" : "/usr/lib/x86_64-linux-gnu/cmake/glfw3"
-		},
-		{
-			"name" : "gli_DIR",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "The directory containing a CMake configuration file for gli."
-				}
-			],
-			"type" : "PATH",
-			"value" : "gli_DIR-NOTFOUND"
-		},
-		{
-			"name" : "glm",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Path to a library."
-				}
-			],
-			"type" : "FILEPATH",
-			"value" : "glm-NOTFOUND"
-		},
-		{
-			"name" : "glm_DIR",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "The directory containing a CMake configuration file for glm."
-				}
-			],
-			"type" : "PATH",
-			"value" : "/usr/lib/cmake/glm"
-		},
-		{
-			"name" : "glui_DIR",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "The directory containing a CMake configuration file for glui."
-				}
-			],
-			"type" : "PATH",
-			"value" : "glui_DIR-NOTFOUND"
-		},
-		{
-			"name" : "lib1_LIB_DEPENDS",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Dependencies for the target"
-				}
-			],
-			"type" : "STATIC",
-			"value" : "general;lib1_location-NOTFOUND;"
-		},
-		{
-			"name" : "lib1_location",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Path to a library."
-				}
-			],
-			"type" : "FILEPATH",
-			"value" : "lib1_location-NOTFOUND"
 		},
 		{
 			"name" : "pkgcfg_lib_GLFW_glfw",

@@ -1,5 +1,5 @@
 #pragma once
-#include <glfw3.h>
+#include <GLFW/glfw3.h>
 
 //Storage class to store the different shapes' vertices and sizes.
 //To add shape: 1) Add to enum Shape. 2) Add the vertice array and size of shape in bytes. 3) Add in the switch statesment in GetShapeVertices

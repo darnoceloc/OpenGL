@@ -1,6 +1,6 @@
 #pragma once
-#include <glfw3.h>
-#include <glm.hpp>
+#include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
 #include <../Camera.h>
 #include <../Geometry/CodedMesh.h>
 #include <../Input/Input.h>

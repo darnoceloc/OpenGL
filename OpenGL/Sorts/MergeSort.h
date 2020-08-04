@@ -1,6 +1,6 @@
 #pragma once
 #include <GLFW/glfw3.h>
-#include <glm.hpp>
+#include <glm/glm.hpp>
 //#include <gtc/matrix_transform.hpp>
 
 //Merge sort that doesn't include rendering. Used for testing
