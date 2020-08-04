@@ -1,7 +1,7 @@
 [
 {
   "directory": "/home/darnoc/Documents/OpenGL/build",
-  "command": "/usr/bin/x86_64-linux-gnu-g++-8 -DGLFW_DLL -g -o CMakeFiles/OpenGL.dir/OpenGL/main.cpp.o -c /home/darnoc/Documents/OpenGL/OpenGL/main.cpp",
+  "command": "/usr/bin/g++-8 -DGLFW_DLL -I/usr/lib64 -I/usr/lib -I/usr/lib/x86_64-linux-gnu -I../Dependencies -I/home/darnoc/Documents/glew-2.2.0 -I/home/darnoc/Documents/glfw-3.3.2 -g -o CMakeFiles/OpenGL.dir/OpenGL/main.cpp.o -c /home/darnoc/Documents/OpenGL/OpenGL/main.cpp",
   "file": "/home/darnoc/Documents/OpenGL/OpenGL/main.cpp"
 }
 ]

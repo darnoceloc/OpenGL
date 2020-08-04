@@ -14,7 +14,7 @@ CostDataFile:
 Site: darnoc-Gazelle
 
 # Build name is osname-revision-compiler, i.e. Linux-2.4.2-2smp-c++
-BuildName: Linux-x86_64-linux-gnu-g++-8
+BuildName: Linux-g++-8
 
 # Subprojects
 LabelsForSubprojects: 
@@ -62,7 +62,7 @@ UpdateOptions:
 UpdateType: git
 
 # Compiler info
-Compiler: /usr/bin/x86_64-linux-gnu-g++-8
+Compiler: /usr/bin/g++-8
 CompilerVersion: 8.4.0
 
 # Dynamic analysis (MemCheck)

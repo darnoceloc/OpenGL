@@ -21,24 +21,24 @@ BUILD_TESTING:BOOL=ON
 BZRCOMMAND:FILEPATH=BZRCOMMAND-NOTFOUND
 
 //Path to a program.
-CMAKE_ADDR2LINE:FILEPATH=/usr/bin/x86_64-linux-gnu-addr2line
+CMAKE_ADDR2LINE:FILEPATH=/usr/bin/addr2line
 
 //Path to a program.
-CMAKE_AR:FILEPATH=/usr/bin/x86_64-linux-gnu-ar
+CMAKE_AR:FILEPATH=/usr/bin/ar
 
 //No help, variable specified on the command line.
 CMAKE_BUILD_TYPE:STRING=Debug
 
 //No help, variable specified on the command line.
-CMAKE_CXX_COMPILER:FILEPATH=/usr/bin/x86_64-linux-gnu-g++-8
+CMAKE_CXX_COMPILER:FILEPATH=/usr/bin/g++-8
 
 //A wrapper around 'ar' adding the appropriate '--plugin' option
 // for the GCC compiler
-CMAKE_CXX_COMPILER_AR:FILEPATH=/usr/bin/x86_64-linux-gnu-gcc-ar-8
+CMAKE_CXX_COMPILER_AR:FILEPATH=/usr/bin/gcc-ar-8
 
 //A wrapper around 'ranlib' adding the appropriate '--plugin' option
 // for the GCC compiler
-CMAKE_CXX_COMPILER_RANLIB:FILEPATH=/usr/bin/x86_64-linux-gnu-gcc-ranlib-8
+CMAKE_CXX_COMPILER_RANLIB:FILEPATH=/usr/bin/gcc-ranlib-8
 
 //Flags used by the CXX compiler during all build types.
 CMAKE_CXX_FLAGS:STRING=
@@ -56,15 +56,15 @@ CMAKE_CXX_FLAGS_RELEASE:STRING=-O3 -DNDEBUG
 CMAKE_CXX_FLAGS_RELWITHDEBINFO:STRING=-O2 -g -DNDEBUG
 
 //No help, variable specified on the command line.
-CMAKE_C_COMPILER:FILEPATH=/usr/bin/x86_64-linux-gnu-gcc-8
+CMAKE_C_COMPILER:FILEPATH=/usr/bin/gcc-8
 
 //A wrapper around 'ar' adding the appropriate '--plugin' option
 // for the GCC compiler
-CMAKE_C_COMPILER_AR:FILEPATH=/usr/bin/x86_64-linux-gnu-gcc-ar-8
+CMAKE_C_COMPILER_AR:FILEPATH=/usr/bin/gcc-ar-8
 
 //A wrapper around 'ranlib' adding the appropriate '--plugin' option
 // for the GCC compiler
-CMAKE_C_COMPILER_RANLIB:FILEPATH=/usr/bin/x86_64-linux-gnu-gcc-ranlib-8
+CMAKE_C_COMPILER_RANLIB:FILEPATH=/usr/bin/gcc-ranlib-8
 
 //Flags used by the C compiler during all build types.
 CMAKE_C_FLAGS:STRING=
@@ -106,7 +106,7 @@ CMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE
 CMAKE_INSTALL_PREFIX:PATH=/usr/local
 
 //Path to a program.
-CMAKE_LINKER:FILEPATH=/usr/bin/x86_64-linux-gnu-ld
+CMAKE_LINKER:FILEPATH=/usr/bin/ld
 
 //Program used to build from build.ninja files.
 CMAKE_MAKE_PROGRAM:FILEPATH=/usr/bin/ninja
@@ -132,13 +132,13 @@ CMAKE_MODULE_LINKER_FLAGS_RELEASE:STRING=
 CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO:STRING=
 
 //Path to a program.
-CMAKE_NM:FILEPATH=/usr/bin/x86_64-linux-gnu-nm
+CMAKE_NM:FILEPATH=/usr/bin/nm
 
 //Path to a program.
-CMAKE_OBJCOPY:FILEPATH=/usr/bin/x86_64-linux-gnu-objcopy
+CMAKE_OBJCOPY:FILEPATH=/usr/bin/objcopy
 
 //Path to a program.
-CMAKE_OBJDUMP:FILEPATH=/usr/bin/x86_64-linux-gnu-objdump
+CMAKE_OBJDUMP:FILEPATH=/usr/bin/objdump
 
 //Value Computed by CMake
 CMAKE_PROJECT_DESCRIPTION:STATIC=
@@ -165,10 +165,10 @@ CMAKE_PROJECT_VERSION_PATCH:STATIC=0
 CMAKE_PROJECT_VERSION_TWEAK:STATIC=
 
 //Path to a program.
-CMAKE_RANLIB:FILEPATH=/usr/bin/x86_64-linux-gnu-ranlib
+CMAKE_RANLIB:FILEPATH=/usr/bin/ranlib
 
 //Path to a program.
-CMAKE_READELF:FILEPATH=/usr/bin/x86_64-linux-gnu-readelf
+CMAKE_READELF:FILEPATH=/usr/bin/readelf
 
 //Flags used by the linker during the creation of shared libraries
 // during all build types.
@@ -218,7 +218,7 @@ CMAKE_STATIC_LINKER_FLAGS_RELEASE:STRING=
 CMAKE_STATIC_LINKER_FLAGS_RELWITHDEBINFO:STRING=
 
 //Path to a program.
-CMAKE_STRIP:FILEPATH=/usr/bin/x86_64-linux-gnu-strip
+CMAKE_STRIP:FILEPATH=/usr/bin/strip
 
 //If this value is on, makefiles will be generated without the
 // .SILENT directive, and all commands will be echoed to the console
@@ -315,7 +315,7 @@ GLEW_SHARED_LIBRARY_RELEASE:FILEPATH=/usr/lib/x86_64-linux-gnu/libGLEW.so
 GLEW_STATIC_LIBRARY_DEBUG:FILEPATH=GLEW_STATIC_LIBRARY_DEBUG-NOTFOUND
 
 //Path to a library.
-GLEW_STATIC_LIBRARY_RELEASE:FILEPATH=/usr/lib64/libGLEW.a
+GLEW_STATIC_LIBRARY_RELEASE:FILEPATH=/usr/lib/libGLEW.a
 
 //Path to a program.
 HGCOMMAND:FILEPATH=HGCOMMAND-NOTFOUND
@@ -355,6 +355,9 @@ SVNCOMMAND:FILEPATH=SVNCOMMAND-NOTFOUND
 
 //The directory containing a CMake configuration file for glfw3.
 glfw3_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/glfw3
+
+//Path to a library.
+pkgcfg_lib_GLFW3_glfw:FILEPATH=/usr/lib/x86_64-linux-gnu/libglfw.so
 
 //Path to a library.
 pkgcfg_lib_GLFW_glfw:FILEPATH=/usr/lib/x86_64-linux-gnu/libglfw.so
@@ -569,6 +572,41 @@ GLEW_SHARED_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
 GLEW_STATIC_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: GLEW_STATIC_LIBRARY_RELEASE
 GLEW_STATIC_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
+GLFW3_CFLAGS:INTERNAL=
+GLFW3_CFLAGS_I:INTERNAL=
+GLFW3_CFLAGS_OTHER:INTERNAL=
+GLFW3_FOUND:INTERNAL=1
+GLFW3_INCLUDEDIR:INTERNAL=/usr/include
+GLFW3_INCLUDE_DIRS:INTERNAL=
+GLFW3_LDFLAGS:INTERNAL=-lglfw
+GLFW3_LDFLAGS_OTHER:INTERNAL=
+GLFW3_LIBDIR:INTERNAL=/usr/lib/x86_64-linux-gnu
+GLFW3_LIBRARIES:INTERNAL=glfw
+GLFW3_LIBRARY_DIRS:INTERNAL=
+GLFW3_LIBS:INTERNAL=
+GLFW3_LIBS_L:INTERNAL=
+GLFW3_LIBS_OTHER:INTERNAL=
+GLFW3_LIBS_PATHS:INTERNAL=
+GLFW3_MODULE_NAME:INTERNAL=glfw3
+GLFW3_PREFIX:INTERNAL=/usr
+GLFW3_STATIC_CFLAGS:INTERNAL=
+GLFW3_STATIC_CFLAGS_I:INTERNAL=
+GLFW3_STATIC_CFLAGS_OTHER:INTERNAL=
+GLFW3_STATIC_INCLUDE_DIRS:INTERNAL=
+GLFW3_STATIC_LDFLAGS:INTERNAL=-lglfw;-lrt;-lm;-ldl
+GLFW3_STATIC_LDFLAGS_OTHER:INTERNAL=
+GLFW3_STATIC_LIBDIR:INTERNAL=
+GLFW3_STATIC_LIBRARIES:INTERNAL=glfw;rt;m;dl
+GLFW3_STATIC_LIBRARY_DIRS:INTERNAL=
+GLFW3_STATIC_LIBS:INTERNAL=
+GLFW3_STATIC_LIBS_L:INTERNAL=
+GLFW3_STATIC_LIBS_OTHER:INTERNAL=
+GLFW3_STATIC_LIBS_PATHS:INTERNAL=
+GLFW3_VERSION:INTERNAL=3.2.1
+GLFW3_glfw3_INCLUDEDIR:INTERNAL=
+GLFW3_glfw3_LIBDIR:INTERNAL=
+GLFW3_glfw3_PREFIX:INTERNAL=
+GLFW3_glfw3_VERSION:INTERNAL=
 GLFW_CFLAGS:INTERNAL=
 GLFW_CFLAGS_I:INTERNAL=
 GLFW_CFLAGS_OTHER:INTERNAL=
@@ -625,6 +663,9 @@ SLURM_SRUN_COMMAND-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: SVNCOMMAND
 SVNCOMMAND-ADVANCED:INTERNAL=1
 __pkg_config_checked_GLFW:INTERNAL=1
+__pkg_config_checked_GLFW3:INTERNAL=1
+//ADVANCED property for variable: pkgcfg_lib_GLFW3_glfw
+pkgcfg_lib_GLFW3_glfw-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: pkgcfg_lib_GLFW_glfw
 pkgcfg_lib_GLFW_glfw-ADVANCED:INTERNAL=1
 prefix_result:INTERNAL=/usr/lib/x86_64-linux-gnu

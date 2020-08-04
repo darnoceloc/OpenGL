@@ -1,11 +1,26 @@
 cmake_minimum_required(VERSION 3.0.0)
 project(OpenGL VERSION 0.1.0)
 SET(SOURCE /home/darnoc/Documents/OpenGL/OpenGL/main.cpp)
+set(SOURCE_FILES /home/darnoc/Documents/OpenGL/main.cpp)
 
 add_executable(${PROJECT_NAME} ${SOURCE})
 
 find_package(PkgConfig REQUIRED)
-pkg_search_module(GLFW REQUIRED glfw3)
+pkg_search_module(GLFW REQUIRED)
+include_directories(${GLFW_INCLUDE_DIRS})
+target_link_libraries(OpenGL ${GLFW_STATIC_LIBRARIES})
+
+find_package(GLEW)
+if (GLEW_FOUND)
+    include_directories(${GLEW_INCLUDE_DIRS})
+    target_link_libraries (OpenGL ${GLEW_LIBRARIES})
+endif (GLEW_FOUND)
+
+find_package(glfw3)
+if (glfw3_FOUND)
+    include_directories(${glfw3_INCLUDE_DIRS})
+    target_link_libraries (OpenGL ${glfw3_LIBRARIES})
+endif (glfw3_FOUND)
 
 include(CTest)
 enable_testing()
@@ -16,7 +31,6 @@ include(CPack)
 
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY /home/darnoc/Documents/OpenGL/build/)
 set(BASE_DIR /home/darnoc/Documents/OpenGL/)
-set(SOURCE_FILES /home/darnoc/Documents/OpenGL/)
 set(GLEW /home/darnoc/Documents/glew-2.2.0/include/GL/glew.h)
 set(GLFW3 /home/darnoc/Documents/glfw-3.3.2/include/GLFW/glfw3.h)
 set(GL /usr/include/GL/glew.h)
@@ -25,19 +39,19 @@ set(GL /usr/include/glm/gtc/matrix_transform.hpp)
 set(glew /home/darnoc/Documents/OpenGL/Dependencies/GLEW/include/glew.h)
 set(glfw3 /home/darnoc/Documents/OpenGL/Dependencies/GLFW/include/glfw3.h)
 
-link_directories(/home/darnoc/Documents/vcpkg/packages/glew_x64-linux/share/glew/vcpkg-cmake-wrapper.cmake /usr/include /usr/lib/x86_64-linux-gnu /home/darnoc/Documents/OpenGL/Dependencies /home/darnoc/Documents/glew-2.2.0 /home/darnoc/Documents/glfw-3.3.2 /home/darnoc/Documents/freeglut-3.2.1)
-
-find_library(GLEW glew HINTS /home/darnoc/Documents/glew-2.2.0/include/GL/glew.h)
-target_link_libraries(OpenGL PUBLIC ${GLEW})
-
-find_library(GLFW3 glfw3 HINTS /home/darnoc/Documents/glfw-3.3.2/include/GLFW/glfw3.h)
-target_link_libraries(OpenGL PUBLIC ${GLFW3})
-
-find_package(GLEW REQUIRED)
-target_link_libraries(OpenGL PRIVATE GLEW::GLEW)
-
-find_package(glfw3 CONFIG REQUIRED)
-target_link_libraries(OpenGL PRIVATE glfw)
-
-
-
+link_directories(/home/darnoc/Documents/vcpkg/packages/glew_x64-linux/share/glew/vcpkg-cmake-wrapper.cmake)
+link_directories(/usr/lib64)
+link_directories(/usr/include)
+link_directories(/usr/lib/x86_64-linux-gnu)
+link_directories(/home/darnoc/Documents/glew-2.2.0)
+link_directories(/home/darnoc/Documents/glfw-3.3.2) 
+link_directories(/home/darnoc/Documents/freeglut-3.2.1)
+link_directories(/home/darnoc/Documents/OpenGL/Dependencies/GLEW/include)
+link_directories(/home/darnoc/Documents/OpenGL/Dependencies/GLFW/include)
+include_directories(/usr/lib64)
+include_directories(/usr/include)
+include_directories(/usr/lib)
+include_directories(/usr/lib/x86_64-linux-gnu)
+include_directories(/home/darnoc/Documents/OpenGL/Dependencies)
+include_directories(/home/darnoc/Documents/glew-2.2.0)
+include_directories(/home/darnoc/Documents/glfw-3.3.2) 
