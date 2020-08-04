@@ -1,0 +1,70 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/Dependencies/GLFW/include",
+                "${workspaceFolder}/Dependencies/GLEW/include",
+                "/usr/include/GL/**",
+                "/usr/include/**",
+                "/home/darnoc/Documents/**",
+                "${workspaceFolder}/Dependencies/GLFW/include/**",
+                "${workspaceFolder}/Dependencies/GLEW/include/**",
+                "/home/darnoc/Documents/vcpkg/**"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/g++-8",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "gcc-x64",
+            "configurationProvider": "ms-vscode.cmake-tools"
+        },
+        {
+            "name": "OpenGL1",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/Dependencies/GLFW/include",
+                "${workspaceFolder}/Dependencies/GLEW/include",
+                "/usr/include/GL/**",
+                "/usr/include/**",
+                "/home/darnoc/Documents/**",
+                "${workspaceFolder}/Dependencies/GLFW/include/**",
+                "${workspaceFolder}/Dependencies/GLEW/include/**",
+                "/home/darnoc/Documents/vcpkg/**"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/g++-8",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "gcc-x64",
+            "compilerArgs": [],
+            "browse": {
+                "path": [
+                    "${workspaceFolder}/**",
+                    "${workspaceFolder}/Dependencies/GLFW/include",
+                    "${workspaceFolder}/Dependencies/GLEW/include",
+                    "/usr/include/GL/**",
+                    "/usr/include/**",
+                    "/home/darnoc/Documents/**",
+                    "${workspaceFolder}/Dependencies/GLFW/include/**",
+                    "${workspaceFolder}/Dependencies/GLEW/include/**",
+                    "/home/darnoc/Documents/vcpkg/**"
+                ],
+                "limitSymbolsToIncludedHeaders": true
+            }
+        },
+        {
+            "name": "OpenGL2",
+            "includePath": [
+                "${workspaceFolder}/**"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/clang-6.0",
+            "cStandard": "c11",
+            "cppStandard": "c++14",
+            "intelliSenseMode": "clang-x64"
+        }
+    ],
+    "version": 4
+}

@@ -14,6 +14,9 @@
 # EXTERNAL cache entries
 ########################
 
+//Path to a library.
+/home/darnoc/Documents/OpenGL/:FILEPATH=/usr/lib/x86_64-linux-gnu/libOpenGL.so
+
 //Build the testing tree.
 BUILD_TESTING:BOOL=ON
 
@@ -299,6 +302,36 @@ DART_TESTING_TIMEOUT:STRING=1500
 //Path to a program.
 GITCOMMAND:FILEPATH=/usr/bin/git
 
+//Path to a library.
+GL:FILEPATH=GL-NOTFOUND
+
+//Path to a library.
+GLEW:FILEPATH=GLEW-NOTFOUND
+
+//The directory containing a CMake configuration file for GLEW.
+GLEW_DIR:PATH=GLEW_DIR-NOTFOUND
+
+//Path to a file.
+GLEW_INCLUDE_DIR:PATH=/usr/include
+
+//Path to a library.
+GLEW_LIBRARY:FILEPATH=GLEW_LIBRARY-NOTFOUND
+
+//Path to a library.
+GLEW_SHARED_LIBRARY_DEBUG:FILEPATH=GLEW_SHARED_LIBRARY_DEBUG-NOTFOUND
+
+//Path to a library.
+GLEW_SHARED_LIBRARY_RELEASE:FILEPATH=/usr/lib/x86_64-linux-gnu/libGLEW.so
+
+//Path to a library.
+GLEW_STATIC_LIBRARY_DEBUG:FILEPATH=GLEW_STATIC_LIBRARY_DEBUG-NOTFOUND
+
+//Path to a library.
+GLEW_STATIC_LIBRARY_RELEASE:FILEPATH=/usr/lib64/libGLEW.a
+
+//Path to a library.
+GLFW3:FILEPATH=GLFW3-NOTFOUND
+
 //Path to a program.
 HGCOMMAND:FILEPATH=HGCOMMAND-NOTFOUND
 
@@ -311,6 +344,33 @@ MEMORYCHECK_COMMAND:FILEPATH=MEMORYCHECK_COMMAND-NOTFOUND
 //File that contains suppressions for the memory checker
 MEMORYCHECK_SUPPRESSIONS_FILE:FILEPATH=
 
+//Path to a file.
+OPENGL_EGL_INCLUDE_DIR:PATH=/usr/include
+
+//Path to a file.
+OPENGL_GLX_INCLUDE_DIR:PATH=/usr/include
+
+//Path to a file.
+OPENGL_INCLUDE_DIR:PATH=/usr/include
+
+//Path to a library.
+OPENGL_egl_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libEGL.so
+
+//Path to a library.
+OPENGL_gl_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libGL.so
+
+//Path to a library.
+OPENGL_glu_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libGLU.so
+
+//Path to a library.
+OPENGL_glx_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libGLX.so
+
+//Path to a library.
+OPENGL_opengl_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libOpenGL.so
+
+//Path to a file.
+OPENGL_xmesa_INCLUDE_DIR:PATH=OPENGL_xmesa_INCLUDE_DIR-NOTFOUND
+
 //Value Computed by CMake
 OpenGL_BINARY_DIR:STATIC=/home/darnoc/Documents/OpenGL/build
 
@@ -319,6 +379,12 @@ OpenGL_SOURCE_DIR:STATIC=/home/darnoc/Documents/OpenGL
 
 //Path to a program.
 P4COMMAND:FILEPATH=P4COMMAND-NOTFOUND
+
+//pkg-config executable
+PKG_CONFIG_EXECUTABLE:FILEPATH=/usr/bin/pkg-config
+
+//Path to a library.
+PROTOBUF_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libprotobuf.so
 
 //Name of the computer/site where compile is being run
 SITE:STRING=darnoc-Gazelle
@@ -331,6 +397,33 @@ SLURM_SRUN_COMMAND:FILEPATH=SLURM_SRUN_COMMAND-NOTFOUND
 
 //Path to a program.
 SVNCOMMAND:FILEPATH=SVNCOMMAND-NOTFOUND
+
+//The directory containing a CMake configuration file for gl3w.
+gl3w_DIR:PATH=gl3w_DIR-NOTFOUND
+
+//The directory containing a CMake configuration file for glfw3.
+glfw3_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/glfw3
+
+//The directory containing a CMake configuration file for gli.
+gli_DIR:PATH=gli_DIR-NOTFOUND
+
+//Path to a library.
+glm:FILEPATH=glm-NOTFOUND
+
+//The directory containing a CMake configuration file for glm.
+glm_DIR:PATH=/usr/lib/cmake/glm
+
+//The directory containing a CMake configuration file for glui.
+glui_DIR:PATH=glui_DIR-NOTFOUND
+
+//Dependencies for the target
+lib1_LIB_DEPENDS:STATIC=general;lib1_location-NOTFOUND;
+
+//Path to a library.
+lib1_location:FILEPATH=lib1_location-NOTFOUND
+
+//Path to a library.
+pkgcfg_lib_GLFW_glfw:FILEPATH=/usr/lib/x86_64-linux-gnu/libglfw.so
 
 
 ########################
@@ -526,8 +619,59 @@ CVSCOMMAND-ADVANCED:INTERNAL=1
 CVS_UPDATE_OPTIONS-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: DART_TESTING_TIMEOUT
 DART_TESTING_TIMEOUT-ADVANCED:INTERNAL=1
+//Details about finding GLEW
+FIND_PACKAGE_MESSAGE_DETAILS_GLEW:INTERNAL=[/usr/include][/usr/lib/x86_64-linux-gnu/libGLEW.so][v2.0.0()]
+//Details about finding OpenGL
+FIND_PACKAGE_MESSAGE_DETAILS_OpenGL:INTERNAL=[/usr/lib/x86_64-linux-gnu/libOpenGL.so][/usr/lib/x86_64-linux-gnu/libGLX.so][/usr/include][c ][v()]
+//Details about finding PkgConfig
+FIND_PACKAGE_MESSAGE_DETAILS_PkgConfig:INTERNAL=[/usr/bin/pkg-config][v0.29.1()]
 //ADVANCED property for variable: GITCOMMAND
 GITCOMMAND-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: GLEW_INCLUDE_DIR
+GLEW_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: GLEW_SHARED_LIBRARY_DEBUG
+GLEW_SHARED_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: GLEW_SHARED_LIBRARY_RELEASE
+GLEW_SHARED_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: GLEW_STATIC_LIBRARY_DEBUG
+GLEW_STATIC_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: GLEW_STATIC_LIBRARY_RELEASE
+GLEW_STATIC_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
+GLFW_CFLAGS:INTERNAL=
+GLFW_CFLAGS_I:INTERNAL=
+GLFW_CFLAGS_OTHER:INTERNAL=
+GLFW_FOUND:INTERNAL=1
+GLFW_INCLUDEDIR:INTERNAL=/usr/include
+GLFW_INCLUDE_DIRS:INTERNAL=
+GLFW_LDFLAGS:INTERNAL=-lglfw
+GLFW_LDFLAGS_OTHER:INTERNAL=
+GLFW_LIBDIR:INTERNAL=/usr/lib/x86_64-linux-gnu
+GLFW_LIBRARIES:INTERNAL=glfw
+GLFW_LIBRARY_DIRS:INTERNAL=
+GLFW_LIBS:INTERNAL=
+GLFW_LIBS_L:INTERNAL=
+GLFW_LIBS_OTHER:INTERNAL=
+GLFW_LIBS_PATHS:INTERNAL=
+GLFW_MODULE_NAME:INTERNAL=glfw3
+GLFW_PREFIX:INTERNAL=/usr
+GLFW_STATIC_CFLAGS:INTERNAL=
+GLFW_STATIC_CFLAGS_I:INTERNAL=
+GLFW_STATIC_CFLAGS_OTHER:INTERNAL=
+GLFW_STATIC_INCLUDE_DIRS:INTERNAL=
+GLFW_STATIC_LDFLAGS:INTERNAL=-lglfw;-lrt;-lm;-ldl
+GLFW_STATIC_LDFLAGS_OTHER:INTERNAL=
+GLFW_STATIC_LIBDIR:INTERNAL=
+GLFW_STATIC_LIBRARIES:INTERNAL=glfw;rt;m;dl
+GLFW_STATIC_LIBRARY_DIRS:INTERNAL=
+GLFW_STATIC_LIBS:INTERNAL=
+GLFW_STATIC_LIBS_L:INTERNAL=
+GLFW_STATIC_LIBS_OTHER:INTERNAL=
+GLFW_STATIC_LIBS_PATHS:INTERNAL=
+GLFW_VERSION:INTERNAL=3.2.1
+GLFW_glfw3_INCLUDEDIR:INTERNAL=
+GLFW_glfw3_LIBDIR:INTERNAL=
+GLFW_glfw3_PREFIX:INTERNAL=
+GLFW_glfw3_VERSION:INTERNAL=
 //ADVANCED property for variable: HGCOMMAND
 HGCOMMAND-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: MAKECOMMAND
@@ -536,8 +680,28 @@ MAKECOMMAND-ADVANCED:INTERNAL=1
 MEMORYCHECK_COMMAND-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: MEMORYCHECK_SUPPRESSIONS_FILE
 MEMORYCHECK_SUPPRESSIONS_FILE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OPENGL_EGL_INCLUDE_DIR
+OPENGL_EGL_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OPENGL_GLX_INCLUDE_DIR
+OPENGL_GLX_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OPENGL_INCLUDE_DIR
+OPENGL_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OPENGL_egl_LIBRARY
+OPENGL_egl_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OPENGL_gl_LIBRARY
+OPENGL_gl_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OPENGL_glu_LIBRARY
+OPENGL_glu_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OPENGL_glx_LIBRARY
+OPENGL_glx_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OPENGL_opengl_LIBRARY
+OPENGL_opengl_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OPENGL_xmesa_INCLUDE_DIR
+OPENGL_xmesa_INCLUDE_DIR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: P4COMMAND
 P4COMMAND-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: PKG_CONFIG_EXECUTABLE
+PKG_CONFIG_EXECUTABLE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: SITE
 SITE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: SLURM_SBATCH_COMMAND
@@ -546,4 +710,8 @@ SLURM_SBATCH_COMMAND-ADVANCED:INTERNAL=1
 SLURM_SRUN_COMMAND-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: SVNCOMMAND
 SVNCOMMAND-ADVANCED:INTERNAL=1
+__pkg_config_checked_GLFW:INTERNAL=1
+//ADVANCED property for variable: pkgcfg_lib_GLFW_glfw
+pkgcfg_lib_GLFW_glfw-ADVANCED:INTERNAL=1
+prefix_result:INTERNAL=/usr/lib/x86_64-linux-gnu
 

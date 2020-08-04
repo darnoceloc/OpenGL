@@ -1,3 +1,7 @@
 # ninja log v5
 0	240	1596469177	CMakeFiles/OpenGL.dir/main.cpp.o	ec60fcdced8d9288
 240	313	1596469178	OpenGL	be39c0b3bde1a52
+1	250	1596469817	CMakeFiles/OpenGL.dir/main.cpp.o	89c9f7ab2a2a9f83
+250	324	1596469817	OpenGL	d8f809a0b58fa111
+0	2	0	clean	a31eedcededa8236
+0	14	0	clean	a31eedcededa8236
