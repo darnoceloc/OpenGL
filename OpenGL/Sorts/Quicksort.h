@@ -3,7 +3,6 @@
 #include <glm/glm.hpp>
 #include "../Camera.h"
 #include "../Geometry/CodedMesh.h"
-#include "../Input/Input.h"
 
 //QuickSort without rendering for testing
 unsigned int Partition(glm::vec3* colorArray, unsigned int low, unsigned int high) {

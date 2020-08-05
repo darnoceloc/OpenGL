@@ -1,7 +1,6 @@
-#pragma once
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
-//#include <gtc/matrix_transform.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 //Merge sort that doesn't include rendering. Used for testing
 void MergeSort(glm::vec3* colorArray, unsigned int start, unsigned int end)

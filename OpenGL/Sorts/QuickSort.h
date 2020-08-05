@@ -1,6 +1,7 @@
-#pragma once
-#include <glfw3.h>
-#include <glm.hpp>
+#include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
+#include "../Camera.h"
+#include "../Geometry/CodedMesh.h"
 
 unsigned int partition(glm::vec3* colorArray, unsigned int low, unsigned int high) {
     unsigned int lowIndex = low - 1;

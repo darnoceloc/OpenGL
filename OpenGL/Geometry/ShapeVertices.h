@@ -8,10 +8,12 @@
 class ShapeVertices
 {
 public:
-	static enum Shape
+	enum Shape
 	{
 		Cube = 0
 	};
+
+	static Shape shape;
 
 	/*******CUBE*******/
 	//Simple 1 unit cube, with 108 total floats equaling 36 vertices. 108 * 4 = 432 bytes in total.

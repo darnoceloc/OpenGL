@@ -1,7 +1,32 @@
 [
 {
   "directory": "/home/darnoc/Documents/OpenGL/build",
-  "command": "/usr/bin/g++-8 -DGLFW_DLL -I/usr/lib64 -I/usr/lib -I/usr/lib/x86_64-linux-gnu -I../Dependencies -I/home/darnoc/Documents/glew-2.2.0 -I/home/darnoc/Documents/glfw-3.3.2 -g -o CMakeFiles/OpenGL.dir/OpenGL/main.cpp.o -c /home/darnoc/Documents/OpenGL/OpenGL/main.cpp",
+  "command": "/usr/bin/g++-8 -DGLFW_DLL -I../ -I/usr/lib64 -I/usr/include/GL -I/usr/include/GLFW -I/usr/include/glm -I/usr/include/X11 -I/usr/lib -I/usr/lib/x86_64-linux-gnu -I../Dependencies -I/home/darnoc/Documents/glew-2.2.0 -I/home/darnoc/Documents/glfw-3.3.2 -I/home/darnoc/Documents/freeglut-3.2.1 -I/home/darnoc/Documents/vcpkg -g -o CMakeFiles/OpenGL_sort.dir/OpenGL/main.cpp.o -c /home/darnoc/Documents/OpenGL/OpenGL/main.cpp",
   "file": "/home/darnoc/Documents/OpenGL/OpenGL/main.cpp"
+},
+{
+  "directory": "/home/darnoc/Documents/OpenGL/build",
+  "command": "/usr/bin/g++-8 -DGLFW_DLL -I../ -I/usr/lib64 -I/usr/include/GL -I/usr/include/GLFW -I/usr/include/glm -I/usr/include/X11 -I/usr/lib -I/usr/lib/x86_64-linux-gnu -I../Dependencies -I/home/darnoc/Documents/glew-2.2.0 -I/home/darnoc/Documents/glfw-3.3.2 -I/home/darnoc/Documents/freeglut-3.2.1 -I/home/darnoc/Documents/vcpkg -g -o CMakeFiles/OpenGL_sort.dir/OpenGL/Geometry/CodedMesh.cpp.o -c /home/darnoc/Documents/OpenGL/OpenGL/Geometry/CodedMesh.cpp",
+  "file": "/home/darnoc/Documents/OpenGL/OpenGL/Geometry/CodedMesh.cpp"
+},
+{
+  "directory": "/home/darnoc/Documents/OpenGL/build",
+  "command": "/usr/bin/g++-8 -DGLFW_DLL -I../ -I/usr/lib64 -I/usr/include/GL -I/usr/include/GLFW -I/usr/include/glm -I/usr/include/X11 -I/usr/lib -I/usr/lib/x86_64-linux-gnu -I../Dependencies -I/home/darnoc/Documents/glew-2.2.0 -I/home/darnoc/Documents/glfw-3.3.2 -I/home/darnoc/Documents/freeglut-3.2.1 -I/home/darnoc/Documents/vcpkg -g -o CMakeFiles/OpenGL_sort.dir/OpenGL/Shaders/Functions/loadShader.cpp.o -c /home/darnoc/Documents/OpenGL/OpenGL/Shaders/Functions/loadShader.cpp",
+  "file": "/home/darnoc/Documents/OpenGL/OpenGL/Shaders/Functions/loadShader.cpp"
+},
+{
+  "directory": "/home/darnoc/Documents/OpenGL/build",
+  "command": "/usr/bin/g++-8 -DGLFW_DLL -I../ -I/usr/lib64 -I/usr/include/GL -I/usr/include/GLFW -I/usr/include/glm -I/usr/include/X11 -I/usr/lib -I/usr/lib/x86_64-linux-gnu -I../Dependencies -I/home/darnoc/Documents/glew-2.2.0 -I/home/darnoc/Documents/glfw-3.3.2 -I/home/darnoc/Documents/freeglut-3.2.1 -I/home/darnoc/Documents/vcpkg -g -o CMakeFiles/OpenGL_sort.dir/OpenGL/Input/Input.cpp.o -c /home/darnoc/Documents/OpenGL/OpenGL/Input/Input.cpp",
+  "file": "/home/darnoc/Documents/OpenGL/OpenGL/Input/Input.cpp"
+},
+{
+  "directory": "/home/darnoc/Documents/OpenGL/build",
+  "command": "/usr/bin/g++-8 -DGLFW_DLL -I../ -I/usr/lib64 -I/usr/include/GL -I/usr/include/GLFW -I/usr/include/glm -I/usr/include/X11 -I/usr/lib -I/usr/lib/x86_64-linux-gnu -I../Dependencies -I/home/darnoc/Documents/glew-2.2.0 -I/home/darnoc/Documents/glfw-3.3.2 -I/home/darnoc/Documents/freeglut-3.2.1 -I/home/darnoc/Documents/vcpkg -g -o CMakeFiles/OpenGL_sort.dir/OpenGL/Geometry/ShapeVertices.cpp.o -c /home/darnoc/Documents/OpenGL/OpenGL/Geometry/ShapeVertices.cpp",
+  "file": "/home/darnoc/Documents/OpenGL/OpenGL/Geometry/ShapeVertices.cpp"
+},
+{
+  "directory": "/home/darnoc/Documents/OpenGL/build",
+  "command": "/usr/bin/g++-8 -DGLFW_DLL -I../ -I/usr/lib64 -I/usr/include/GL -I/usr/include/GLFW -I/usr/include/glm -I/usr/include/X11 -I/usr/lib -I/usr/lib/x86_64-linux-gnu -I../Dependencies -I/home/darnoc/Documents/glew-2.2.0 -I/home/darnoc/Documents/glfw-3.3.2 -I/home/darnoc/Documents/freeglut-3.2.1 -I/home/darnoc/Documents/vcpkg -g -o CMakeFiles/OpenGL_sort.dir/OpenGL/Renderer/Renderer.cpp.o -c /home/darnoc/Documents/OpenGL/OpenGL/Renderer/Renderer.cpp",
+  "file": "/home/darnoc/Documents/OpenGL/OpenGL/Renderer/Renderer.cpp"
 }
 ]
