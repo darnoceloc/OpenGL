@@ -73,7 +73,7 @@ int main(void)
     GLFWwindow* window;
 
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(1280, 1024, "BC2 Final Project", NULL, NULL);
+    window = glfwCreateWindow(1280, 1024, "OPenGL Window", NULL, NULL);
     
     if (!window)
     {
